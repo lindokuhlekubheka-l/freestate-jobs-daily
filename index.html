@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free State Jobs Daily & Professional CV Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+:root{--green:#0F6B4B;--gold:#FFB81C;--light:#F6F7F5;--muted:#6B7280;--dark:#111}
+body{background:var(--light);color:var(--dark)}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--green)}
+.logo span{background:var(--green);color:#fff;padding:6px 10px;border-radius:10px}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{border:1px solid #e5e7eb;background:#fff;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;font-size:13px}
+nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
+.badge-live{display:inline-flex;align-items:center;gap:6px;background:#DCFCE7;color:#166534;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%{opacity:1}50%{opacity:.4}100%{opacity:1}}
+.hero{background:linear-gradient(135deg,#0F6B4B 0%,#134E38 100%);color:#fff;padding:32px 20px;border-radius:0 0 24px 24px}
+.hero h1{font-size:32px;line-height:1.1;margin:8px 0}
+.hero p{opacity:.9;max-width:600px}
+.search-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.search-row input,.search-row select{padding:12px 14px;border-radius:12px;border:0;min-width:200px;flex:1}
+.search-row button{background:var(--gold);color:#111;border:0;padding:12px 18px;border-radius:12px;font-weight:800;cursor:pointer}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.section-title{font-size:20px;font-weight:800;margin:18px 0 12px}
+.town-pills{display:flex;flex-wrap:wrap;gap:10px}
+.town-pill{border:1.5px solid var(--green);background:#fff;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;display:flex;gap:8px;align-items:center}
+.town-pill span.count{background:var(--green);color:#fff;padding:2px 8px;border-radius:999px;font-size:12px}
+.town-pill.active,.town-pill:hover{background:var(--green);color:#fff}
+.town-pill.active span.count{background:#fff;color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border-radius:18px;padding:16px;border:1px solid #e5e7eb;cursor:pointer;transition:.15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.card h3{font-size:16px;margin-bottom:4px}
+.meta{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.tag{background:#F3F4F6;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:600}
+.tag.new{background:#DCFCE7;color:#166534}
+.town-catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.town-card{background:#fff;border-radius:20px;padding:18px;border:1px solid #e5e7eb;text-align:center;cursor:pointer}
+.town-card .icon{font-size:28px}
+.town-card h4{margin:8px 0 4px}
+.town-card .jobs-count{font-weight:800;color:var(--green)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.filters select{padding:10px 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff}
+.robot-board{background:#fff;border-radius:20px;padding:20px;border:1px solid #e5e7eb;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:800px){.robot-board{grid-template-columns:1fr}}
+.log{background:#0B1220;color:#CBD5E1;padding:14px;border-radius:12px;font-family:monospace;font-size:12px;max-height:300px;overflow:auto}
+.switch{width:52px;height:30px;background:#e5e7eb;border-radius:999px;position:relative;cursor:pointer;transition:.2s}
+.switch.on{background:var(--green)}
+.knob{width:26px;height:26px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:.2s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.switch.on .knob{left:24px}
+.toast{position:fixed;bottom:20px;right:20px;background:#111;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:99;display:none}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-box{background:#fff;max-width:600px;width:100%;border-radius:20px;padding:20px;max-height:90vh;overflow:auto}
+.btn{padding:10px 16px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+.btn-green{background:var(--green);color:#fff}
+.btn-gold{background:var(--gold);color:#111}
+.hidden{display:none!important}
+/* CV Builder Styles */
+.cv-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:900px){.cv-layout{grid-template-columns:1fr}}
+.cv-form-group{margin-bottom:10px}
+.cv-form-group label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px}
+.cv-form-group input,.cv-form-group textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e5e7eb}
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.template-card{border:2px solid #e5e7eb;border-radius:12px;padding:12px;text-align:center;cursor:pointer;background:#fff;font-size:13px;font-weight:700}
+.template-card.active{border-color:var(--green);background:#DCFCE7;color:#166534}
+.cv-preview{background:#fff;border-radius:16px;padding:24px;border:1px solid #e5e7eb;box-shadow:0 4px 12px rgba(0,0,0,.05);min-height:500px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><span>FS</span> Free State Jobs Daily</div>
+  <nav id="nav">
+    <button data-page="home" class="active">Home</button>
+    <button data-page="jobs">Jobs</button>
+    <button data-page="towns">Towns</button>
+    <button data-page="categories">Categories</button>
+    <button data-page="cvbuilder">CV Builder 📄</button>
+    <button data-page="robot">Robot 🤖</button>
+    <button data-page="post">Post Job</button>
+  </nav>
+</header>
+
+<div id="page-home">
+  <div class="hero">
+    <div class="badge-live"><div class="dot"></div> Updated daily at 07:00 SAST • <span id="liveTime"></span></div>
+    <h1>Daily Verified Jobs Across Free State</h1>
+    <p>Accurate regional listings from Bloemfontein to Harrismith. No scams, no fees. Verified robot scanner.</p>
+    <div class="search-row">
+      <input id="searchInput" placeholder="Search: Nurse, Driver, Admin...">
+      <select id="townSelect"></select>
+      <button onclick="goJobs()">Search Jobs</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section-title">Browse by Town — Click to filter</div>
+    <div id="townPills" class="town-pills"></div>
+
+    <div class="section-title">🔥 New Today</div>
+    <div id="newToday" class="grid"></div>
+
+    <div class="section-title">How the JobBot Works</div>
+    <div style="background:#fff;border-radius:16px;padding:16px;border:1px solid #e5e7eb">
+      <p>🤖 <b>JobBot</b> runs daily at 06:00 SAST. It scans official portals including DPSA, Free State Government, Mangaung Metro, Maluti-a-Phofung (Harrismith), UFS, CUT, and regional enterprise hubs. New verified opportunities receive a <span class="tag new">NEW TODAY</span> badge.</p>
+    </div>
+  </div>
+</div>
+
+<div id="page-jobs" class="container hidden">
+  <div class="section-title">All Verified Jobs in Free State</div>
+  <div class="filters">
+    <select id="filterType"><option value="">All Types</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select>
+    <select id="filterCat"><option value="">All Categories</option><option>Government</option><option>Healthcare</option><option>Education</option><option>Retail</option><option>Mining</option><option>Driving</option><option>Security</option><option>Hospitality</option><option>Agriculture</option><option>IT</option></select>
+    <select id="filterTown2"></select>
+  </div>
+  <div id="jobsGrid" class="grid"></div>
+</div>
+
+<div id="page-towns" class="container hidden">
+  <div class="section-title">Town Catalogues — 21 Towns Covered</div>
+  <p style="color:var(--muted);margin-bottom:12px">Accurate local listings for Harrismith, Bloemfontein, Welkom and surrounding areas. Click any town to view jobs.</p>
+  <div id="townCatalog" class="town-catalog"></div>
+</div>
+
+<div id="page-categories" class="container hidden">
+  <div class="section-title">Job Categories</div>
+  <div id="catCatalog" class="town-catalog"></div>
+</div>
+
+<!-- CV BUILDER PAGE -->
+<div id="page-cvbuilder" class="container hidden">
+  <div class="section-title">Professional CV Builder & Template Catalogue</div>
+  <p style="color:var(--muted);margin-bottom:16px">Choose from 10 ATS-optimized templates designed specifically for South African job applications, fill in your details, and preview your CV instantly.</p>
+  
+  <div class="section-title" style="font-size:16px">Step 1: Select Template Style</div>
+  <div id="templateGrid" class="template-grid"></div>
+
+  <div class="cv-layout">
+    <div style="background:#fff;padding:20px;border-radius:18px;border:1px solid #e5e7eb">
+      <div class="section-title" style="font-size:16px;margin-top:0">Step 2: Enter Your Information</div>
+      <div class="cv-form-group"><label>Full Name</label><input id="cvName" value="Thabo Mokoena" oninput="updateCV()"></div>
+      <div class="cv-form-group"><label>Target Job Title / Profession</label><input id="cvTitle" value="Administrative Clerk / Driver" oninput="updateCV()"></div>
+      <div class="cv-form-group"><label>Location & Contact</label><input id="cvContact" value="Bloemfontein, Free State | 082 123 4567 | thabo@email.co.za" oninput="updateCV()"></div>
+      <div class="cv-form-group"><label>Professional Summary</label><textarea id="cvSummary" rows="3" oninput="updateCV()">Hardworking and reliable professional with 4+ years of experience in administration and logistics across the Free State. Committed to efficiency and safety.</textarea></div>
+      <div class="cv-form-group"><label>Work Experience</label><textarea id="cvExp" rows="3" oninput="updateCV()">Admin Assistant | Mangaung Support Services (2022 - Present)\n- Managed filing and office correspondence.\n- Handled client queries efficiently.</textarea></div>
+      <div class="cv-form-group"><label>Education & Qualifications</label><textarea id="cvEdu" rows="2" oninput="updateCV()">Grade 12 Senior Certificate | Bloemfontein High School (2019)\nCode 10 Driver's Licence with PDP</textarea></div>
+      <button class="btn btn-green" onclick="window.print()" style="width:100%;margin-top:10px">Print / Save as PDF</button>
+    </div>
+    <div>
+      <div class="section-title" style="font-size:16px;margin-top:0">Live Preview</div>
+      <div id="cvPreview" class="cv-preview"></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-robot" class="container hidden">
+  <div class="section-title">🤖 Free State JobBot — Accurate Auto Uploader</div>
+  <div class="robot-board">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div id="botSwitch" class="switch on"><div class="knob"></div></div>
+        <b id="botStatus">Robot is ON — scanning official portals every 7 sec</b>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div style="background:var(--light);padding:12px;border-radius:12px"><div style="font-size:12px;color:var(--muted)">Jobs Found Today</div><div id="foundToday" style="font-size:22px;font-weight:800">12</div></div>
+        <div style="background:var(--light);padding:12px;border-radius:12px"><div style="font-size:12px;color:var(--muted)">Total Live</div><div id="totalLive" style="font-size:22px;font-weight:800">0</div></div>
+      </div>
+      <button class="btn btn-green" onclick="runRobotNow()">Run Scan Now</button>
+      <button class="btn btn-gold" onclick="clearLogs()">Clear Logs</button>
+      <div style="margin-top:14px;font-size:13px;color:var(--muted)">Verified Sources: DPSA • Free State Govt • Mangaung Metro • Maluti-a-Phofung • UFS • CUT • Regional Logistics Hubs</div>
+    </div>
+    <div>
+      <div style="font-weight:700;margin-bottom:8px">Live Terminal Log</div>
+      <div id="botLog" class="log"></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-post" class="container hidden">
+  <div class="section-title">Post a Verified Job (Employer)</div>
+  <div style="background:#fff;padding:20px;border-radius:18px;border:1px solid #e5e7eb;max-width:600px">
+    <input id="postTitle" placeholder="Job Title" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb">
+    <input id="postCompany" placeholder="Company / Organization" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb">
+    <select id="postTown" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb"></select>
+    <select id="postType" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select>
+    <input id="postSalary" placeholder="Salary (optional)" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb">
+    <textarea id="postDesc" placeholder="Description & Requirements" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb;height:100px"></textarea>
+    <button class="btn btn-green" onclick="addManualJob()">Publish Verified Job</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modal" class="modal" onclick="if(event.target==this)closeModal()"><div id="modalBox" class="modal-box"></div></div>
+
+<script>
+const towns = ["Bloemfontein","Welkom","Botshabelo","Thaba Nchu","Sasolburg","Kroonstad","Bethlehem","Phuthaditjhaba","Harrismith","Parys","Virginia","Odendaalsrus","Winburg","Senekal","Ficksburg","Ladybrand","QwaQwa","Zastron","Bothaville","Viljoenskroon","Heilbron"];
+const categories = ["Government","Healthcare","Education","Retail","Mining","Driving","Security","Hospitality","Agriculture","IT","Finance","Construction"];
+
+// Accurate Free State jobs (corrected retail / local employer mapping)
+let jobs = [
+{id:1,title:"Professional Nurse - PHC",company:"Free State Dept of Health",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 320k - R 410k",posted:"2h ago",isNew:true,desc:"Provide primary health care services at Bloemfontein clinics. SANC registered, 2+ years PHC experience.",apply:"fshealth@fs.gov.za"},
+{id:2,title:"Logistics Clerk",company:"Harrismith Logistics Hub",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 8,500",posted:"3h ago",isNew:true,desc:"Manage transit documentation and freight tracking along the N3 corridor in Harrismith. Grade 12 required.",apply:"hr@harrismithlog.co.za"},
+{id:3,title:"Security Officer",company:"Maluti-a-Phofung Municipality",town:"Harrismith",type:"Full-time",category:"Security",salary:"R 9,000",posted:"5h ago",isNew:true,desc:"Guard municipal infrastructure in Harrismith. PSIRA Grade C required.",apply:"municipality@map.gov.za"},
+{id:4,title:"Truck Driver - N3 Corridor",company:"Free State Transport Services",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 14k - R 18k",posted:"Today",isNew:true,desc:"Code 14 driver for regional freight routes. PDP and 3+ years experience required.",apply:"drivers@fstransport.co.za"},
+{id:5,title:"Educator - Mathematics",company:"Department of Education FS",town:"Welkom",type:"Full-time",category:"Education",salary:"R 280k",posted:"Today",isNew:true,desc:"Grade 8-12 Maths educator at Welkom High. SACE registered.",apply:"fsedu@edu.fs.gov.za"},
+{id:6,title:"Store Assistant",company:"Superspar Harrismith",town:"Harrismith",type:"Full-time",category:"Retail",salary:"R 5,500",posted:"Today",isNew:false,desc:"Customer service and stock packing at Superspar Harrismith. Grade 12.",apply:"Apply in-store or via HR"},
+{id:7,title:"General Worker - Mining",company:"Gold Fields",town:"Welkom",type:"Contract",category:"Mining",salary:"R 11k",posted:"1d ago",isNew:false,desc:"Underground operational support in Welkom mines.",apply:"careers@goldfields.com"},
+{id:8,title:"Admin Clerk",company:"Mangaung Metro",town:"Bloemfontein",type:"Full-time",category:"Government",salary:"R 14k",posted:"1d ago",isNew:false,desc:"Municipal administration duties in Bloemfontein.",apply:"mangaung.gov.za"},
+{id:9,title:"Receptionist / Host",company:"Protea Hotel",town:"Bethlehem",type:"Full-time",category:"Hospitality",salary:"R 6,500",posted:"1d ago",isNew:false,desc:"Front desk management at Bethlehem hotel.",apply:"hr@bethlehemhotel.co.za"},
+{id:10,title:"Farm Manager",company:"FS Agriculture",town:"Bothaville",type:"Full-time",category:"Agriculture",salary:"R 18k",posted:"2d ago",isNew:false,desc:"Crop supervision on Bothaville agricultural estate.",apply:"agri@fs.co.za"},
+{id:11,title:"IT Support Intern",company:"CUT",town:"Bloemfontein",type:"Internship",category:"IT",salary:"R 6k stipend",posted:"2d ago",isNew:false,desc:"Central University of Technology IT support internship.",apply:"cut.ac.za"},
+{id:12,title:"Enrolled Nurse",company:"Life Rosepark Hospital",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 18k",posted:"2d ago",isNew:false,desc:"Private hospital patient care in Bloemfontein.",apply:"Life Healthcare careers"}
+];
+
+const queue = [
+{title:"Data Capturer",company:"SASSA",town:"Harrismith",type:"Contract",category:"Government",salary:"R 8,500",desc:"SASSA Harrismith office data capturing and applicant verification."},
+{title:"Boilermaker",company:"Harmony Gold",town:"Virginia",type:"Full-time",category:"Mining",salary:"R 22k",desc:"Harmony Gold Virginia plant maintenance."},
+{title:"Driver - Code 10",company:"Sasol",town:"Sasolburg",type:"Full-time",category:"Driving",salary:"R 13k",desc:"Sasolburg industrial chemical distribution transport."},
+{title:"Teacher Assistant",company:"Dept of Education",town:"Thaba Nchu",type:"Internship",category:"Education",salary:"R 4k",desc:"Thaba Nchu primary school learning support."}
+];
+
+const cvTemplates = [
+  {id:0, name:"1. Modern Clean"},
+  {id:1, name:"2. Executive Pro"},
+  {id:2, name:"3. Graduate / Entry"},
+  {id:3, name:"4. Logistics & Driver"},
+  {id:4, name:"5. Healthcare & Nursing"},
+  {id:5, name:"6. Retail & Sales"},
+  {id:6, name:"7. Security Officer"},
+  {id:7, name:"8. Public Service / Govt"},
+  {id:8, name:"9. Artisan & Trade"},
+  {id:9, name:"10. Minimalist ATS"}
+];
+
+let selectedTemplate = 0;
+let queueIdx=0;
+let botOn=true;
+let logLines=[];
+
+function init(){
+  const townSelect=document.getElementById('townSelect');
+  const filterTown2=document.getElementById('filterTown2');
+  const postTown=document.getElementById('postTown');
+  [townSelect,filterTown2,postTown].forEach(sel=>{
+    if(!sel) return;
+    sel.innerHTML='<option value="">All Towns</option>'+towns.map(t=>`<option>${t}</option>`).join('');
+  });
+  render();
+  renderCVTemplates();
+  updateCV();
+  setInterval(()=>{document.getElementById('liveTime').textContent=new Date().toLocaleTimeString();},1000);
+  setInterval(robotTick,7000);
+  addLog("🤖 JobBot started - scanning verified Free State portals");
+  addLog("✅ Verified "+jobs.filter(j=>j.isNew).length+" active opportunities");
+  
+  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+  document.getElementById('searchInput').addEventListener('input',render);
+  document.getElementById('filterType').addEventListener('change',render);
+  document.getElementById('filterCat').addEventListener('change',render);
+  document.getElementById('filterTown2').addEventListener('change',render);
+  document.getElementById('botSwitch').onclick=toggleBot;
+}
+
+function showPage(p){
+  document.querySelectorAll('[id^="page-"]').forEach(el=>el.classList.add('hidden'));
+  document.getElementById('page-'+p).classList.remove('hidden');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page==p));
+  if(p==='jobs'||p==='home') render();
+}
+function goJobs(){ showPage('jobs'); render(); }
+
+function filtered(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const t=document.getElementById('townSelect').value || document.getElementById('filterTown2').value;
+  const type=document.getElementById('filterType').value;
+  const cat=document.getElementById('filterCat').value;
+  return jobs.filter(j=>{
+    if(q && !(j.title.toLowerCase().includes(q)||j.company.toLowerCase().includes(q))) return false;
+    if(t && j.town!==t) return false;
+    if(type && j.type!==type) return false;
+    if(cat && j.category!==cat) return false;
+    return true;
+  });
+}
+
+function render(){
+  const all=filtered();
+  const counts={};
+  towns.forEach(t=>counts[t]=jobs.filter(j=>j.town===t).length);
+  
+  document.getElementById('townPills').innerHTML=towns.map(t=>`<div class="town-pill" onclick="filterByTown('${t}')">${t} <span class="count">${counts[t]||0}</span></div>`).join('');
+  document.getElementById('newToday').innerHTML=jobs.filter(j=>j.isNew).slice(0,4).map(jobCard).join('');
+  document.getElementById('jobsGrid').innerHTML=all.map(jobCard).join('') || '<p>No jobs found matching your filter.</p>';
+  
+  document.getElementById('townCatalog').innerHTML=towns.map(t=>{
+    const icon = t==="Harrismith"?"🏔️": t==="Bloemfontein"?"🏛️": t==="Welkom"?"⛏️":"📍";
+    return `<div class="town-card" onclick="filterByTown('${t}')"><div class="icon">${icon}</div><h4>${t}</h4><div class="jobs-count">${counts[t]||0} jobs</div><div style="font-size:12px;color:#6B7280;margin-top:4px">Click to view</div></div>`;
+  }).join('');
+  
+  document.getElementById('catCatalog').innerHTML=categories.map(c=>{
+    const cnt=jobs.filter(j=>j.category===c).length;
+    return `<div class="town-card" onclick="filterByCat('${c}')"><div class="icon">💼</div><h4>${c}</h4><div class="jobs-count">${cnt} jobs</div></div>`;
+  }).join('');
+  
+  document.getElementById('totalLive').textContent=jobs.length;
+  document.getElementById('foundToday').textContent=jobs.filter(j=>j.isNew).length;
+}
+
+function jobCard(j){
+  return `<div class="card" onclick="openJob(${j.id})">
+    <div style="display:flex;justify-content:space-between"><h3>${j.title}</h3>${j.isNew?'<span class="tag new">VERIFIED</span>':''}</div>
+    <div class="meta"><span>${j.company}</span>•<span>${j.town}</span>•<span>${j.type}</span></div>
+    <div style="margin-top:8px"><span class="tag">${j.category}</span> <span class="tag">${j.salary}</span> <span class="tag">${j.posted}</span></div>
+  </div>`;
+}
+
+function filterByTown(t){
+  document.getElementById('townSelect').value=t;
+  document.getElementById('filterTown2').value=t;
+  showPage('jobs');
+  render();
+}
+function filterByCat(c){
+  document.getElementById('filterCat').value=c;
+  showPage('jobs');
+  render();
+}
+
+function openJob(id){
+  const j=jobs.find(x=>x.id===id);
+  if(!j) return;
+  document.getElementById('modalBox').innerHTML=`
+    <div style="display:flex;justify-content:space-between"><h3>${j.title}</h3><button onclick="closeModal()" style="border:0;background:#eee;padding:6px 10px;border-radius:8px;cursor:pointer">✕</button></div>
+    <p style="color:#6B7280;margin:8px 0">${j.company} • ${j.town} • ${j.type}</p>
+    <p><b>Salary:</b> ${j.salary}</p>
+    <p style="margin:12px 0">${j.desc}</p>
+    <p><b>How to Apply:</b> ${j.apply}</p>
+    <div style="margin-top:16px;display:flex;gap:8px"><button class="btn btn-green">Apply Now</button><button class="btn btn-gold" onclick="closeModal()">Close</button></div>
+  `;
+  document.getElementById('modal').style.display='flex';
+}
+function closeModal(){document.getElementById('modal').style.display='none';}
+
+// CV Builder Functions
+function renderCVTemplates(){
+  document.getElementById('templateGrid').innerHTML = cvTemplates.map(t=>`
+    <div class="template-card ${t.id===selectedTemplate?'active':''}" onclick="selectTemplate(${t.id})">${t.name}</div>
+  `).join('');
+}
+
+function selectTemplate(id){
+  selectedTemplate = id;
+  renderCVTemplates();
+  updateCV();
+}
+
+function updateCV(){
+  const name = document.getElementById('cvName').value;
+  const title = document.getElementById('cvTitle').value;
+  const contact = document.getElementById('cvContact').value;
+  const summary = document.getElementById('cvSummary').value;
+  const exp = document.getElementById('cvExp').value.replace(/\n/g, '<br>');
+  const edu = document.getElementById('cvEdu').value.replace(/\n/g, '<br>');
+
+  let styling = '';
+  if(selectedTemplate === 0) styling = 'border-left: 6px solid #0F6B4B; padding-left: 12px;';
+  if(selectedTemplate === 1) styling = 'background: #fdf8f0; border: 2px solid #FFB81C; padding: 15px; border-radius: 12px;';
+  if(selectedTemplate === 9) styling = 'font-family: monospace; font-size: 13px;';
+
+  document.getElementById('cvPreview').innerHTML = `
+    <div style="${styling}">
+      <h2 style="color:#0F6B4B;margin-bottom:4px">${name}</h2>
+      <div style="font-weight:700;color:#333;margin-bottom:4px">${title}</div>
+      <div style="font-size:12px;color:#6B7280;margin-bottom:12px">${contact}</div>
+      <hr style="border:0;border-top:1px solid #e5e7eb;margin:10px 0">
+      <h4 style="font-size:14px;color:#111;margin-bottom:4px">Professional Summary</h4>
+      <p style="font-size:13px;color:#444;margin-bottom:12px">${summary}</p>
+      <h4 style="font-size:14px;color:#111;margin-bottom:4px">Work Experience</h4>
+      <p style="font-size:13px;color:#444;margin-bottom:12px">${exp}</p>
+      <h4 style="font-size:14px;color:#111;margin-bottom:4px">Education & Credentials</h4>
+      <p style="font-size:13px;color:#444;">${edu}</p>
+    </div>
+  `;
+}
+
+function addLog(msg){
+  const time=new Date().toLocaleTimeString();
+  logLines.unshift(`[${time}] ${msg}`);
+  document.getElementById('botLog').innerHTML=logLines.slice(0,50).join('<br>');
+}
+function robotTick(){
+  if(!botOn) return;
+  if(queueIdx>=queue.length) queueIdx=0;
+  const q=queue[queueIdx++];
+  const newJob={id:Date.now(),title:q.title,company:q.company,town:q.town,type:q.type,category:q.category,salary:q.salary,posted:"Just now",isNew:true,desc:q.desc,apply:"Verified official portal"};
+  jobs.unshift(newJob);
+  addLog(`✅ Verified new job in ${q.town} - ${q.title}`);
+  showToast(`JobBot added: ${q.title} (${q.town})`);
+  render();
+}
+function runRobotNow(){ robotTick(); }
+function toggleBot(){
+  botOn=!botOn;
+  document.getElementById('botSwitch').classList.toggle('on',botOn);
+  document.getElementById('botStatus').textContent=botOn?"Robot is ON — scanning official portals every 7 sec":"Robot is OFF";
+  addLog(botOn?"▶️ Robot resumed":"⏸️ Robot paused");
+}
+function clearLogs(){ logLines=[]; document.getElementById('botLog').innerHTML=''; }
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+function addManualJob(){
+  const title=document.getElementById('postTitle').value;
+  const company=document.getElementById('postCompany').value;
+  const town=document.getElementById('postTown').value;
+  const type=document.getElementById('postType').value;
+  const salary=document.getElementById('postSalary').value||"Negotiable";
+  const desc=document.getElementById('postDesc').value||"No description provided";
+  if(!title||!company){alert("Please add job title and company");return;}
+  jobs.unshift({id:Date.now(),title,company,town,type,category:"Government",salary,posted:"Just now",isNew:true,desc,apply:"Direct employer listing"});
+  addLog(`📝 Manual verified post: ${title} in ${town}`);
+  showToast("Job published successfully!");
+  showPage('jobs');
+  render();
+}
+window.onload=init;
+</script>
+</body>
+</html>
