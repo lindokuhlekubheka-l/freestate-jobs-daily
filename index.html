@@ -182,7 +182,7 @@ nav::-webkit-scrollbar{display:none}
     <button class="btn btn-outline" onclick="goBack()">← Back to Previous Page</button>
   </div>
   <div class="section-title">Professional Curriculum Vitae (CV) Builder</div>
-  <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Fill in your information below following the structured format[cite: 2]. Click <b>Download / Print CV</b> to export only your formatted CV as a PDF.</p>
+  <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Fill in your information below following the structured guide[cite: 2]. Type into any field to replace the guided example. Click <b>Download / Print CV</b> to export only your CV.</p>
   
   <div class="cv-grid">
     <!-- Editor Pane -->
@@ -190,74 +190,82 @@ nav::-webkit-scrollbar{display:none}
       
       <div class="form-group">
         <label>FULL NAME & SURNAME</label>
-        <input id="cvName" value="THABO JOHN MAESELA" oninput="updateCV()">
+        <input id="cvName" placeholder="e.g. THABO JOHN MAESELA" oninput="updateCV()">
       </div>
 
       <div style="background:#F6F7F5;padding:12px;border-radius:10px;margin-bottom:12px">
-        <div style="font-weight:700;font-size:12px;margin-bottom:8px">STANDARD ADDRESS & CONTACT INFORMATION</div>
+        <div style="font-weight:700;font-size:12px;margin-bottom:8px">PERSONAL INFORMATION (STANDARD FORM)</div>
         
         <div class="form-group">
-          <label>Street Address</label>
-          <input id="cvStreet" value="24, 16th Avenue" oninput="updateCV()">
+          <label>Street Name & Number</label>
+          <input id="cvStreet" placeholder="e.g. 24, 16th Avenue" oninput="updateCV()">
         </div>
         <div class="form-group">
           <label>Suburb</label>
-          <input id="cvSuburb" value="Villieria" oninput="updateCV()">
+          <input id="cvSuburb" placeholder="e.g. Villieria" oninput="updateCV()">
         </div>
         <div class="form-group">
           <label>Town / City</label>
-          <input id="cvTown" value="Pretoria" oninput="updateCV()">
+          <input id="cvTown" placeholder="e.g. Pretoria" oninput="updateCV()">
         </div>
         <div class="form-group">
           <label>Postal Code</label>
-          <input id="cvPostCode" value="0183" oninput="updateCV()">
-        </div>
-        
-        <div class="form-group">
-          <label>Telephone / Cell Numbers</label>
-          <input id="cvPhone" value="Tel: 012-322 1034 | Cell: 083 476 5201" oninput="updateCV()">
+          <input id="cvPostCode" placeholder="e.g. 0183" oninput="updateCV()">
         </div>
         <div class="form-group">
-          <label>Identity Number & Details</label>
-          <input id="cvPersonalMeta" value="ID: 8605222346630 | DOB: 1986-05-22 | Single | Code 08 Driver's" oninput="updateCV()">
+          <label>Telephone Number</label>
+          <input id="cvTel" placeholder="e.g. 012-322 1034" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Cell Number</label>
+          <input id="cvCell" placeholder="e.g. 083 476 5201" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input id="cvDob" placeholder="e.g. 1986-05-22" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Identity Number</label>
+          <input id="cvId" placeholder="e.g. 8605222346630" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Marital Status</label>
+          <input id="cvMarital" placeholder="e.g. Single" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Driver's Licence</label>
+          <input id="cvLicence" placeholder="e.g. Code 08" oninput="updateCV()">
         </div>
       </div>
 
       <div class="form-group">
         <label>1. CAREER GOALS</label>
-        <textarea id="cvGoals" rows="3" oninput="updateCV()">I would like to work in an organization where I can use my qualifications in Accountancy. I aim to become Manager of Finance within 5-10 years. Self-starter with excellent interpersonal skills.</textarea>
+        <textarea id="cvGoals" rows="3" placeholder="e.g. I would like to work in an organization where I can use my qualifications in Accountancy..." oninput="updateCV()"></textarea>
       </div>
 
       <div class="form-group">
         <label>3. EDUCATION, QUALIFICATIONS & SKILLS</label>
-        <textarea id="cvEdu" rows="3" oninput="updateCV()">High School: Mamelodi High School (Senior Certificate)
-Post-Matric: Accountancy Diploma (Rosebank College)
-Skills: MsWord, MsExcel, MsPowerpoint, Pastel Accounting, Book-keeping, Tax returns</textarea>
+        <textarea id="cvEdu" rows="3" placeholder="e.g. High School: Mamelodi High School (Senior Certificate)&#10;Post-Matric: Accountancy Diploma&#10;Skills: MsWord, MsExcel, Pastel Accounting" oninput="updateCV()"></textarea>
       </div>
 
       <div class="form-group">
         <label>4. LANGUAGES</label>
-        <textarea id="cvLang" rows="2" oninput="updateCV()">Speak: Northern Sotho (good), English (good), Afrikaans (fair), Zulu (fair)
-Read/Write: Northern Sotho, English, Afrikaans, Zulu</textarea>
+        <textarea id="cvLang" rows="2" placeholder="e.g. Speak: Northern Sotho (good), English (good), Afrikaans (fair)&#10;Read/Write: Northern Sotho, English, Afrikaans" oninput="updateCV()"></textarea>
       </div>
 
       <div class="form-group">
         <label>5. CAREER HISTORY & WORK EXPERIENCE</label>
-        <textarea id="cvExp" rows="3" oninput="updateCV()">Part-time: Cashier and packer at Pick n Pay during weekends and school holidays (4 years)
-Salesperson at Pretoria Show for Philips (Sept 2006 & Sept 2007)
-Full-time: None</textarea>
+        <textarea id="cvExp" rows="3" placeholder="e.g. Part-time: Cashier and packer at Pick n Pay (4 years)&#10;Full-time: None" oninput="updateCV()"></textarea>
       </div>
 
       <div class="form-group">
         <label>6-8. INTERESTS, RESPONSIBILITIES & AWARDS</label>
-        <textarea id="cvRes" rows="2" oninput="updateCV()">Activities: Debating Society, YMCA Secretary
-Prizes: School colours for soccer, Soweto Marathon Silver Medal</textarea>
+        <textarea id="cvRes" rows="2" placeholder="e.g. Activities: Debating Society, YMCA Secretary&#10;Prizes: School colours for soccer" oninput="updateCV()"></textarea>
       </div>
 
       <div class="form-group">
         <label>9. REFERENCES</label>
-        <textarea id="cvRef" rows="3" oninput="updateCV()">1. Mr PH Smith - Facilitator, Villieria YMCA (Tel: 012 346 2413)
-2. Dr SL Mahlangu - Principal, Mamelodi High School (Tel: 012 455 8590)</textarea>
+        <textarea id="cvRef" rows="3" placeholder="e.g. 1. Mr PH Smith - Villieria YMCA (Tel: 012 346 2413)&#10;2. Dr SL Mahlangu - Principal, Mamelodi High School" oninput="updateCV()"></textarea>
       </div>
       
       <button class="btn btn-green" onclick="window.print()" style="width:100%;margin-top:6px">📥 Download / Print CV (PDF)</button>
@@ -474,58 +482,66 @@ function openJob(id){
 
 function closeModal(){ document.getElementById('modal').style.display = 'none'; }
 
-// Full Guide CV Template Generator
+// Full Guide CV Template Generator with Vertical Formatting & Bold Details
 function updateCV(){
-  const name = document.getElementById('cvName').value;
-  const street = document.getElementById('cvStreet').value;
-  const suburb = document.getElementById('cvSuburb').value;
-  const town = document.getElementById('cvTown').value;
-  const postCode = document.getElementById('cvPostCode').value;
-  const phone = document.getElementById('cvPhone').value;
-  const meta = document.getElementById('cvPersonalMeta').value;
-  
-  const goals = document.getElementById('cvGoals').value;
-  const edu = document.getElementById('cvEdu').value.replace(/\n/g, '<br>');
-  const lang = document.getElementById('cvLang').value.replace(/\n/g, '<br>');
-  const exp = document.getElementById('cvExp').value.replace(/\n/g, '<br>');
-  const res = document.getElementById('cvRes').value.replace(/\n/g, '<br>');
-  const ref = document.getElementById('cvRef').value.replace(/\n/g, '<br>');
+  const name = document.getElementById('cvName').value || 'THABO JOHN MAESELA';
+  const street = document.getElementById('cvStreet').value || '24, 16th Avenue';
+  const suburb = document.getElementById('cvSuburb').value || 'Villieria';
+  const town = document.getElementById('cvTown').value || 'Pretoria';
+  const postCode = document.getElementById('cvPostCode').value || '0183';
+  const tel = document.getElementById('cvTel').value || '012-322 1034';
+  const cell = document.getElementById('cvCell').value || '083 476 5201';
+  const dob = document.getElementById('cvDob').value || '1986-05-22';
+  const idNum = document.getElementById('cvId').value || '8605222346630';
+  const marital = document.getElementById('cvMarital').value || 'Single';
+  const licence = document.getElementById('cvLicence').value || 'Code 08';
+
+  const goals = document.getElementById('cvGoals').value || 'I would like to work in an organization where I can use my qualifications in Accountancy...';
+  const edu = (document.getElementById('cvEdu').value || 'High School: Mamelodi High School\nPost-Matric: Accountancy Diploma').replace(/\n/g, '<br>');
+  const lang = (document.getElementById('cvLang').value || 'Speak: Northern Sotho (good), English (good)\nRead/Write: Northern Sotho, English').replace(/\n/g, '<br>');
+  const exp = (document.getElementById('cvExp').value || 'Part-time: Cashier and packer at Pick n Pay (4 years)\nFull-time: None').replace(/\n/g, '<br>');
+  const res = (document.getElementById('cvRes').value || 'Activities: Debating Society, YMCA Secretary\nPrizes: School colours for soccer').replace(/\n/g, '<br>');
+  const ref = (document.getElementById('cvRef').value || '1. Mr PH Smith - Villieria YMCA\n2. Dr SL Mahlangu - Principal, Mamelodi High School').replace(/\n/g, '<br>');
 
   document.getElementById('cvPreview').innerHTML = `
-    <div style="font-family:'Inter',sans-serif;color:#111;line-height:1.4">
-      <div style="text-align:center;margin-bottom:12px">
-        <h1 style="font-size:24px;font-weight:800;letter-spacing:1px;margin-bottom:2px;font-family:'Inter',sans-serif">${name}</h1>
-        <div style="font-size:11px;color:#555">CURRICULUM VITAE</div>
+    <div style="font-family:'Inter',sans-serif;color:#111;line-height:1.5">
+      <div style="text-align:center;margin-bottom:14px">
+        <h1 style="font-size:24px;font-weight:800;letter-spacing:1px;margin-bottom:2px;font-family:'Inter',sans-serif"><b>${name}</b></h1>
+        <div style="font-size:12px;color:#555;font-weight:700">CURRICULUM VITAE</div>
       </div>
       
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">1. Career Goals</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">${goals}</p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">1. Career Goals</div>
+      <p style="font-size:11.5px;color:#222;margin-bottom:12px"><b>${goals}</b></p>
 
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">2. Personal Information</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">
-        <b>Address:</b><br>
-        ${street}<br>
-        ${suburb}<br>
-        ${town}<br>
-        ${postCode}<br>
-        ${phone}<br>
-        ${meta}
-      </p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">2. Personal Information</div>
+      <div style="font-size:11.5px;color:#222;margin-bottom:12px">
+        <div><b>Address:</b></div>
+        <div><b>${street}</b></div>
+        <div><b>${suburb}</b></div>
+        <div><b>${town}</b></div>
+        <div><b>${postCode}</b></div>
+        <div style="margin-top:4px"><b>Telephone:</b> ${tel}</div>
+        <div><b>Cell:</b> ${cell}</div>
+        <div style="margin-top:4px"><b>Date of Birth:</b> ${dob}</div>
+        <div><b>Identity Number:</b> ${idNum}</div>
+        <div><b>Marital Status:</b> ${marital}</div>
+        <div><b>Driver's Licence:</b> ${licence}</div>
+      </div>
       
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">3. Education, Qualifications and Skills</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">${edu}</p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">3. Education, Qualifications and Skills</div>
+      <p style="font-size:11.5px;color:#222;margin-bottom:12px"><b>${edu}</b></p>
 
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">4. Languages</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">${lang}</p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">4. Languages</div>
+      <p style="font-size:11.5px;color:#222;margin-bottom:12px"><b>${lang}</b></p>
 
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">5. Career History</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">${exp}</p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">5. Career History</div>
+      <p style="font-size:11.5px;color:#222;margin-bottom:12px"><b>${exp}</b></p>
 
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">6-8. Personal Interests & Responsibilities</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">${res}</p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">6-8. Personal Interests & Responsibilities</div>
+      <p style="font-size:11.5px;color:#222;margin-bottom:12px"><b>${res}</b></p>
 
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">9. References</div>
-      <p style="font-size:11px;color:#333;">${ref}</p>
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">9. References</div>
+      <p style="font-size:11.5px;color:#222"><b>${ref}</b></p>
     </div>
   `;
 }
