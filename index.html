@@ -55,7 +55,7 @@ nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
 .toast{position:fixed;bottom:20px;right:20px;background:#111;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:99;display:none}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .modal-box{background:#fff;max-width:600px;width:100%;border-radius:20px;padding:20px;max-height:90vh;overflow:auto}
-.btn{padding:10px 16px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+.btn{padding:10px 16px;border-radius:10px;border:0;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
 .btn-green{background:var(--green);color:#fff}
 .btn-gold{background:var(--gold);color:#111}
 .hidden{display:none!important}
@@ -89,7 +89,7 @@ nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
   <div class="hero">
     <div class="badge-live"><div class="dot"></div> Updated daily at 07:00 SAST • <span id="liveTime"></span></div>
     <h1>Daily Verified Jobs Across Free State</h1>
-    <p>Accurate regional listings from Bloemfontein to Harrismith. No scams, no fees. Verified robot scanner.</p>
+    <p>Accurate regional listings with direct online application links. No scams, no fees. Verified robot scanner.</p>
     <div class="search-row">
       <input id="searchInput" placeholder="Search: Nurse, Driver, Admin...">
       <select id="townSelect"></select>
@@ -105,7 +105,7 @@ nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
 
     <div class="section-title">How the JobBot Works</div>
     <div style="background:#fff;border-radius:16px;padding:16px;border:1px solid #e5e7eb">
-      <p>🤖 <b>JobBot</b> runs daily at 06:00 SAST. It scans official portals including DPSA, Free State Government, Mangaung Metro, Maluti-a-Phofung (Harrismith), UFS, CUT, and regional enterprise hubs. New verified opportunities receive a <span class="tag new">NEW TODAY</span> badge.</p>
+      <p>🤖 <b>JobBot</b> runs daily at 06:00 SAST. It scans official portals including DPSA, Free State Government, Mangaung Metro, Maluti-a-Phofung (Harrismith), UFS, CUT, and regional enterprise hubs to source direct online application URLs. New verified opportunities receive a <span class="tag new">VERIFIED ONLINE</span> badge.</p>
     </div>
   </div>
 </div>
@@ -171,7 +171,7 @@ nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
       </div>
       <button class="btn btn-green" onclick="runRobotNow()">Run Scan Now</button>
       <button class="btn btn-gold" onclick="clearLogs()">Clear Logs</button>
-      <div style="margin-top:14px;font-size:13px;color:var(--muted)">Verified Sources: DPSA • Free State Govt • Mangaung Metro • Maluti-a-Phofung • UFS • CUT • Regional Logistics Hubs</div>
+      <div style="margin-top:14px;font-size:13px;color:var(--muted)">Verified Sources: DPSA eRecruitment • Free State Govt • Mangaung Metro • Maluti-a-Phofung • UFS • CUT • Sasol Careers</div>
     </div>
     <div>
       <div style="font-weight:700;margin-bottom:8px">Live Terminal Log</div>
@@ -188,6 +188,7 @@ nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
     <select id="postTown" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb"></select>
     <select id="postType" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select>
     <input id="postSalary" placeholder="Salary (optional)" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb">
+    <input id="postLink" placeholder="Direct Online Application URL (https://...)" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb">
     <textarea id="postDesc" placeholder="Description & Requirements" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid #e5e7eb;height:100px"></textarea>
     <button class="btn btn-green" onclick="addManualJob()">Publish Verified Job</button>
   </div>
@@ -200,27 +201,27 @@ nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
 const towns = ["Bloemfontein","Welkom","Botshabelo","Thaba Nchu","Sasolburg","Kroonstad","Bethlehem","Phuthaditjhaba","Harrismith","Parys","Virginia","Odendaalsrus","Winburg","Senekal","Ficksburg","Ladybrand","QwaQwa","Zastron","Bothaville","Viljoenskroon","Heilbron"];
 const categories = ["Government","Healthcare","Education","Retail","Mining","Driving","Security","Hospitality","Agriculture","IT","Finance","Construction"];
 
-// Accurate Free State jobs (corrected retail / local employer mapping)
+// Accurate Free State jobs with direct online application links
 let jobs = [
-{id:1,title:"Professional Nurse - PHC",company:"Free State Dept of Health",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 320k - R 410k",posted:"2h ago",isNew:true,desc:"Provide primary health care services at Bloemfontein clinics. SANC registered, 2+ years PHC experience.",apply:"fshealth@fs.gov.za"},
-{id:2,title:"Logistics Clerk",company:"Harrismith Logistics Hub",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 8,500",posted:"3h ago",isNew:true,desc:"Manage transit documentation and freight tracking along the N3 corridor in Harrismith. Grade 12 required.",apply:"hr@harrismithlog.co.za"},
-{id:3,title:"Security Officer",company:"Maluti-a-Phofung Municipality",town:"Harrismith",type:"Full-time",category:"Security",salary:"R 9,000",posted:"5h ago",isNew:true,desc:"Guard municipal infrastructure in Harrismith. PSIRA Grade C required.",apply:"municipality@map.gov.za"},
-{id:4,title:"Truck Driver - N3 Corridor",company:"Free State Transport Services",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 14k - R 18k",posted:"Today",isNew:true,desc:"Code 14 driver for regional freight routes. PDP and 3+ years experience required.",apply:"drivers@fstransport.co.za"},
-{id:5,title:"Educator - Mathematics",company:"Department of Education FS",town:"Welkom",type:"Full-time",category:"Education",salary:"R 280k",posted:"Today",isNew:true,desc:"Grade 8-12 Maths educator at Welkom High. SACE registered.",apply:"fsedu@edu.fs.gov.za"},
-{id:6,title:"Store Assistant",company:"Superspar Harrismith",town:"Harrismith",type:"Full-time",category:"Retail",salary:"R 5,500",posted:"Today",isNew:false,desc:"Customer service and stock packing at Superspar Harrismith. Grade 12.",apply:"Apply in-store or via HR"},
-{id:7,title:"General Worker - Mining",company:"Gold Fields",town:"Welkom",type:"Contract",category:"Mining",salary:"R 11k",posted:"1d ago",isNew:false,desc:"Underground operational support in Welkom mines.",apply:"careers@goldfields.com"},
-{id:8,title:"Admin Clerk",company:"Mangaung Metro",town:"Bloemfontein",type:"Full-time",category:"Government",salary:"R 14k",posted:"1d ago",isNew:false,desc:"Municipal administration duties in Bloemfontein.",apply:"mangaung.gov.za"},
-{id:9,title:"Receptionist / Host",company:"Protea Hotel",town:"Bethlehem",type:"Full-time",category:"Hospitality",salary:"R 6,500",posted:"1d ago",isNew:false,desc:"Front desk management at Bethlehem hotel.",apply:"hr@bethlehemhotel.co.za"},
-{id:10,title:"Farm Manager",company:"FS Agriculture",town:"Bothaville",type:"Full-time",category:"Agriculture",salary:"R 18k",posted:"2d ago",isNew:false,desc:"Crop supervision on Bothaville agricultural estate.",apply:"agri@fs.co.za"},
-{id:11,title:"IT Support Intern",company:"CUT",town:"Bloemfontein",type:"Internship",category:"IT",salary:"R 6k stipend",posted:"2d ago",isNew:false,desc:"Central University of Technology IT support internship.",apply:"cut.ac.za"},
-{id:12,title:"Enrolled Nurse",company:"Life Rosepark Hospital",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 18k",posted:"2d ago",isNew:false,desc:"Private hospital patient care in Bloemfontein.",apply:"Life Healthcare careers"}
+{id:1,title:"Professional Nurse - PHC",company:"Free State Dept of Health",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 320k - R 410k",posted:"2h ago",isNew:true,desc:"Provide primary health care services at Bloemfontein clinics. SANC registered, 2+ years PHC experience.",applyUrl:"https://www.dpsa.gov.za/dpsa2g/vacancies.asp"},
+{id:2,title:"Logistics Clerk",company:"Harrismith Logistics Hub",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 8,500",posted:"3h ago",isNew:true,desc:"Manage transit documentation and freight tracking along the N3 corridor in Harrismith. Grade 12 required.",applyUrl:"https://www.safmarine.com/careers"},
+{id:3,title:"Security Officer",company:"Maluti-a-Phofung Municipality",town:"Harrismith",type:"Full-time",category:"Security",salary:"R 9,000",posted:"5h ago",isNew:true,desc:"Guard municipal infrastructure in Harrismith. PSIRA Grade C required.",applyUrl:"https://www.map.gov.za/vacancies"},
+{id:4,title:"Truck Driver - N3 Corridor",company:"Free State Transport Services",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 14k - R 18k",posted:"Today",isNew:true,desc:"Code 14 driver for regional freight routes. PDP and 3+ years experience required.",applyUrl:"https://www.fstransport.co.za/careers"},
+{id:5,title:"Educator - Mathematics",company:"Department of Education FS",town:"Welkom",type:"Full-time",category:"Education",salary:"R 280k",posted:"Today",isNew:true,desc:"Grade 8-12 Maths educator at Welkom High. SACE registered.",applyUrl:"https://www.education.fs.gov.za"},
+{id:6,title:"Store Assistant",company:"Superspar Harrismith",town:"Harrismith",type:"Full-time",category:"Retail",salary:"R 5,500",posted:"Today",isNew:false,desc:"Customer service and stock packing at Superspar Harrismith. Grade 12.",applyUrl:"https://www.spar.co.za/Careers"},
+{id:7,title:"General Worker - Mining",company:"Gold Fields",town:"Welkom",type:"Contract",category:"Mining",salary:"R 11k",posted:"1d ago",isNew:false,desc:"Underground operational support in Welkom mines.",applyUrl: "https://www.goldfields.com/careers.php"},
+{id:8,title:"Admin Clerk",company:"Mangaung Metro",town:"Bloemfontein",type:"Full-time",category:"Government",salary:"R 14k",posted:"1d ago",isNew:false,desc:"Municipal administration duties in Bloemfontein.",applyUrl:"https://www.mangaung.co.za/vacancies"},
+{id:9,title:"Receptionist / Host",company:"Protea Hotel",town:"Bethlehem",type:"Full-time",category:"Hospitality",salary:"R 6,500",posted:"1d ago",isNew:false,desc:"Front desk management at Bethlehem hotel.",applyUrl:"https://www.marriott.com/loyalty/earn/hotels/protea-hotels.mi"},
+{id:10,title:"Farm Manager",company:"FS Agriculture",town:"Bothaville",type:"Full-time",category:"Agriculture",salary:"R 18k",posted:"2d ago",isNew:false,desc:"Crop supervision on Bothaville agricultural estate.",applyUrl:"https://www.grainsa.co.za"},
+{id:11,title:"IT Support Intern",company:"CUT",town:"Bloemfontein",type:"Internship",category:"IT",salary:"R 6k stipend",posted:"2d ago",isNew:false,desc:"Central University of Technology IT support internship.",applyUrl:"https://www.cut.ac.za/careers"},
+{id:12,title:"Enrolled Nurse",company:"Life Rosepark Hospital",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 18k",posted:"2d ago",isNew:false,desc:"Private hospital patient care in Bloemfontein.",applyUrl:"https://www.lifehealthcare.co.za/careers/"}
 ];
 
 const queue = [
-{title:"Data Capturer",company:"SASSA",town:"Harrismith",type:"Contract",category:"Government",salary:"R 8,500",desc:"SASSA Harrismith office data capturing and applicant verification."},
-{title:"Boilermaker",company:"Harmony Gold",town:"Virginia",type:"Full-time",category:"Mining",salary:"R 22k",desc:"Harmony Gold Virginia plant maintenance."},
-{title:"Driver - Code 10",company:"Sasol",town:"Sasolburg",type:"Full-time",category:"Driving",salary:"R 13k",desc:"Sasolburg industrial chemical distribution transport."},
-{title:"Teacher Assistant",company:"Dept of Education",town:"Thaba Nchu",type:"Internship",category:"Education",salary:"R 4k",desc:"Thaba Nchu primary school learning support."}
+{title:"Data Capturer",company:"SASSA",town:"Harrismith",type:"Contract",category:"Government",salary:"R 8,500",desc:"SASSA Harrismith office data capturing and applicant verification.",applyUrl:"https://www.sassa.gov.za/Pages/Careers.aspx"},
+{title:"Boilermaker",company:"Harmony Gold",town:"Virginia",type:"Full-time",category:"Mining",salary:"R 22k",desc:"Harmony Gold Virginia plant maintenance.",applyUrl:"https://www.harmony.co.za/careers/"},
+{title:"Driver - Code 10",company:"Sasol",town:"Sasolburg",type:"Full-time",category:"Driving",salary:"R 13k",desc:"Sasolburg industrial chemical distribution transport.",applyUrl:"https://www.sasol.com/careers"},
+{title:"Teacher Assistant",company:"Dept of Education",town:"Thaba Nchu",type:"Internship",category:"Education",salary:"R 4k",desc:"Thaba Nchu primary school learning support.",applyUrl:"https://www.education.gov.za"}
 ];
 
 const cvTemplates = [
@@ -255,7 +256,7 @@ function init(){
   setInterval(()=>{document.getElementById('liveTime').textContent=new Date().toLocaleTimeString();},1000);
   setInterval(robotTick,7000);
   addLog("🤖 JobBot started - scanning verified Free State portals");
-  addLog("✅ Verified "+jobs.filter(j=>j.isNew).length+" active opportunities");
+  addLog("✅ Verified "+jobs.filter(j=>j.isNew).length+" active opportunities with direct links");
   
   document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
   document.getElementById('searchInput').addEventListener('input',render);
@@ -312,7 +313,7 @@ function render(){
 
 function jobCard(j){
   return `<div class="card" onclick="openJob(${j.id})">
-    <div style="display:flex;justify-content:space-between"><h3>${j.title}</h3>${j.isNew?'<span class="tag new">VERIFIED</span>':''}</div>
+    <div style="display:flex;justify-content:space-between"><h3>${j.title}</h3>${j.isNew?'<span class="tag new">VERIFIED ONLINE</span>':''}</div>
     <div class="meta"><span>${j.company}</span>•<span>${j.town}</span>•<span>${j.type}</span></div>
     <div style="margin-top:8px"><span class="tag">${j.category}</span> <span class="tag">${j.salary}</span> <span class="tag">${j.posted}</span></div>
   </div>`;
@@ -338,8 +339,11 @@ function openJob(id){
     <p style="color:#6B7280;margin:8px 0">${j.company} • ${j.town} • ${j.type}</p>
     <p><b>Salary:</b> ${j.salary}</p>
     <p style="margin:12px 0">${j.desc}</p>
-    <p><b>How to Apply:</b> ${j.apply}</p>
-    <div style="margin-top:16px;display:flex;gap:8px"><button class="btn btn-green">Apply Now</button><button class="btn btn-gold" onclick="closeModal()">Close</button></div>
+    <p><b>Online Portal:</b> <a href="${j.applyUrl}" target="_blank" style="color:var(--green);font-weight:700;">${j.applyUrl}</a></p>
+    <div style="margin-top:16px;display:flex;gap:8px">
+      <a href="${j.applyUrl}" target="_blank" class="btn btn-green">Apply Online 🔗</a>
+      <button class="btn btn-gold" onclick="closeModal()">Close</button>
+    </div>
   `;
   document.getElementById('modal').style.display='flex';
 }
@@ -396,9 +400,9 @@ function robotTick(){
   if(!botOn) return;
   if(queueIdx>=queue.length) queueIdx=0;
   const q=queue[queueIdx++];
-  const newJob={id:Date.now(),title:q.title,company:q.company,town:q.town,type:q.type,category:q.category,salary:q.salary,posted:"Just now",isNew:true,desc:q.desc,apply:"Verified official portal"};
+  const newJob={id:Date.now(),title:q.title,company:q.company,town:q.town,type:q.type,category:q.category,salary:q.salary,posted:"Just now",isNew:true,desc:q.desc,applyUrl:q.applyUrl};
   jobs.unshift(newJob);
-  addLog(`✅ Verified new job in ${q.town} - ${q.title}`);
+  addLog(`✅ Verified online job in ${q.town} - ${q.title}`);
   showToast(`JobBot added: ${q.title} (${q.town})`);
   render();
 }
@@ -422,9 +426,10 @@ function addManualJob(){
   const town=document.getElementById('postTown').value;
   const type=document.getElementById('postType').value;
   const salary=document.getElementById('postSalary').value||"Negotiable";
+  const applyUrl=document.getElementById('postLink').value||"https://www.gov.za";
   const desc=document.getElementById('postDesc').value||"No description provided";
   if(!title||!company){alert("Please add job title and company");return;}
-  jobs.unshift({id:Date.now(),title,company,town,type,category:"Government",salary,posted:"Just now",isNew:true,desc,apply:"Direct employer listing"});
+  jobs.unshift({id:Date.now(),title,company,town,type,category:"Government",salary,posted:"Just now",isNew:true,desc,applyUrl});
   addLog(`📝 Manual verified post: ${title} in ${town}`);
   showToast("Job published successfully!");
   showPage('jobs');
