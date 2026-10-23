@@ -19,8 +19,8 @@ nav::-webkit-scrollbar{display:none}
 .nav-btn{padding:6px 12px;border-radius:999px;border:1px solid transparent;background:transparent;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
 .nav-btn.active{background:#111F15;color:#fff}
 
-.hero{max-width:1280px;margin:0 auto;padding:32px 16px 20px}
-.hero h1{font-size:clamp(36px,8vw,64px);line-height:.96;margin-bottom:12px}
+.hero{max-width:1280px;margin:0 auto;padding:24px 16px 16px}
+.hero h1{font-size:clamp(32px,7vw,56px);line-height:.96;margin-bottom:12px}
 .hero h1 i{font-style:italic}
 .hero p{color:var(--muted);max-width:600px;font-size:14px;margin-bottom:18px;line-height:1.5}
 
@@ -29,7 +29,7 @@ nav::-webkit-scrollbar{display:none}
 .search-bar button{background:var(--green);color:#fff;border:0;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;width:100%}
 
 .container{max-width:1280px;margin:0 auto;padding:16px}
-.section-title{font-size:24px;margin-bottom:14px;font-weight:600}
+.section-title{font-size:22px;margin-bottom:12px;font-weight:600}
 
 .grid-jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .job{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;transition:.15s}
@@ -49,27 +49,34 @@ nav::-webkit-scrollbar{display:none}
 .robot-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:768px){.robot-box{grid-template-columns:1fr 1fr;padding:24px}}
 
-.terminal{background:#0B1220;color:#38BDF8;padding:14px;border-radius:12px;font-family:monospace;font-size:11.5px;height:260px;overflow-y:auto;line-height:1.5}
+.terminal{background:#0B1220;color:#38BDF8;padding:14px;border-radius:12px;font-family:monospace;font-size:11.5px;height:240px;overflow-y:auto;line-height:1.5}
 
 .modal{position:fixed;inset:0;background:rgba(18,18,18,.5);display:none;align-items:center;justify-content:center;z-index:80;padding:16px}
 .modal-inner{background:#fff;max-width:560px;width:100%;border-radius:18px;padding:20px;max-height:85vh;overflow-y:auto}
 
 .cv-grid{display:grid;grid-template-columns:1fr;gap:20px}
-@media(min-width:768px){.cv-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:850px){.cv-grid{grid-template-columns:1fr 1fr}}
 
-/* Dedicated CV Print / Download Styling */
+.form-group{margin-bottom:10px}
+.form-group label{font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);font-size:13px;font-family:inherit}
+
+/* Dedicated CV Print Styling */
 @media print {
   body * { visibility: hidden; }
   #cvPreview, #cvPreview * { visibility: visible; }
   #cvPreview { position: absolute; left: 0; top: 0; width: 100%; border: 0; padding: 0; box-shadow: none; background: #fff; }
-  header, nav, .cv-editor-pane { display: none !important; }
+  header, nav, .cv-editor-pane, .back-bar { display: none !important; }
 }
 
 .btn{padding:10px 16px;border-radius:10px;border:0;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-size:14px;text-align:center}
 .btn-green{background:#2E7D32;color:#fff}
 .btn-dark{background:#111F15;color:#fff}
+.btn-outline{background:transparent;border:1px solid var(--line);color:#111}
 .hidden{display:none!important}
 .toast{position:fixed;bottom:16px;right:16px;background:#111;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;z-index:99;box-shadow:0 10px 25px rgba(0,0,0,.2);display:none}
+
+.back-bar{margin-bottom:12px;display:flex;align-items:center}
 </style>
 </head>
 <body>
@@ -111,6 +118,9 @@ nav::-webkit-scrollbar{display:none}
 
 <!-- JOBS PAGE -->
 <div id="page-jobs" class="container hidden">
+  <div class="back-bar">
+    <button class="btn btn-outline" onclick="goBack()">← Back to Previous Page</button>
+  </div>
   <div class="section-title">All Indexed Municipal & Corporate Vacancies</div>
   <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
     <select id="filterTown" style="padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;flex:1;min-width:140px"><option value="">All Towns</option></select>
@@ -130,6 +140,9 @@ nav::-webkit-scrollbar{display:none}
 
 <!-- TOWNS PAGE -->
 <div id="page-towns" class="container hidden">
+  <div class="back-bar">
+    <button class="btn btn-outline" onclick="goBack()">← Back to Previous Page</button>
+  </div>
   <div class="section-title">Free State Municipalities & Towns</div>
   <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Select any town to view live verified opportunities currently indexed.</p>
   <div id="townCatalogGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
@@ -137,6 +150,9 @@ nav::-webkit-scrollbar{display:none}
 
 <!-- ROBOT SCRAPER PAGE -->
 <div id="page-robot" class="container hidden">
+  <div class="back-bar">
+    <button class="btn btn-outline" onclick="goBack()">← Back to Previous Page</button>
+  </div>
   <div class="section-title">🤖 Free State JobBot Crawler</div>
   <div class="robot-box">
     <div>
@@ -162,20 +178,87 @@ nav::-webkit-scrollbar{display:none}
 
 <!-- CV BUILDER PAGE -->
 <div id="page-cvbuilder" class="container hidden">
+  <div class="back-bar">
+    <button class="btn btn-outline" onclick="goBack()">← Back to Previous Page</button>
+  </div>
   <div class="section-title">Professional Curriculum Vitae (CV) Builder</div>
-  <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Fill in your professional history below following the complete CV guide. Click <b>Download / Print CV</b> to export only your formatted CV as a PDF[cite: 2].</p>
+  <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Fill in your information below following the structured format[cite: 2]. Click <b>Download / Print CV</b> to export only your formatted CV as a PDF.</p>
   
   <div class="cv-grid">
     <!-- Editor Pane -->
     <div class="cv-editor-pane" style="background:#fff;padding:16px;border-radius:14px;border:1px solid var(--line)">
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">FULL NAME</label><input id="cvName" value="THABO JOHN MAESELA" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px"></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">PERSONAL INFORMATION</label><textarea id="cvInfo" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Address: 24, 16th Avenue, Villieria, Pretoria | Tel: 012-322 1034 | Cell: 083 4765 201\nDOB: 1986-05-22 | ID: 8605222346630 | Status: Single | Driver's Licence: Code 08</textarea></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">CAREER GOALS</label><textarea id="cvGoals" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">I aim to use my qualifications in Accountancy to become Finance Manager within 5-10 years. Self-starter with excellent interpersonal and conflict-management skills.</textarea></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">EDUCATION & SKILLS</label><textarea id="cvEdu" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">High School: Mamelodi High School (Senior Certificate)\nPost-Matric: Accountancy Diploma (Rosebank College)\nSkills: MsOffice, Pastel Accounting, Book-keeping, Tax returns, Leadership</textarea></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">LANGUAGES</label><textarea id="cvLang" rows="2" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Speak: Northern Sotho (good), English (good), Afrikaans (fair), Zulu (fair)\nRead/Write: Northern Sotho, English, Afrikaans, Zulu</textarea></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">CAREER HISTORY & EXPERIENCE</label><textarea id="cvExp" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Part-time: Cashier and packer at Pick n Pay (4 years); Salesperson at Pretoria Show (Philips)\nFull-time: None</textarea></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">INTERESTS & RESPONSIBILITIES</label><textarea id="cvRes" rows="2" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Hobbies: Reading, hiking, road running\nResponsibilities: Prefect, Secretary of YMCA Villieria</textarea></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">REFERENCES</label><textarea id="cvRef" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">1. Mr PH Smith - Villieria YMCA (Tel: 012 346 2413)\n2. Dr SL Mahlangu - Mamelodi High School (Tel: 012 455 8590)</textarea></div>
+      
+      <div class="form-group">
+        <label>FULL NAME & SURNAME</label>
+        <input id="cvName" value="THABO JOHN MAESELA" oninput="updateCV()">
+      </div>
+
+      <div style="background:#F6F7F5;padding:12px;border-radius:10px;margin-bottom:12px">
+        <div style="font-weight:700;font-size:12px;margin-bottom:8px">STANDARD ADDRESS & CONTACT INFORMATION</div>
+        
+        <div class="form-group">
+          <label>Street Address</label>
+          <input id="cvStreet" value="24, 16th Avenue" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Suburb</label>
+          <input id="cvSuburb" value="Villieria" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Town / City</label>
+          <input id="cvTown" value="Pretoria" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Postal Code</label>
+          <input id="cvPostCode" value="0183" oninput="updateCV()">
+        </div>
+        
+        <div class="form-group">
+          <label>Telephone / Cell Numbers</label>
+          <input id="cvPhone" value="Tel: 012-322 1034 | Cell: 083 476 5201" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+          <label>Identity Number & Details</label>
+          <input id="cvPersonalMeta" value="ID: 8605222346630 | DOB: 1986-05-22 | Single | Code 08 Driver's" oninput="updateCV()">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>1. CAREER GOALS</label>
+        <textarea id="cvGoals" rows="3" oninput="updateCV()">I would like to work in an organization where I can use my qualifications in Accountancy. I aim to become Manager of Finance within 5-10 years. Self-starter with excellent interpersonal skills.</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>3. EDUCATION, QUALIFICATIONS & SKILLS</label>
+        <textarea id="cvEdu" rows="3" oninput="updateCV()">High School: Mamelodi High School (Senior Certificate)
+Post-Matric: Accountancy Diploma (Rosebank College)
+Skills: MsWord, MsExcel, MsPowerpoint, Pastel Accounting, Book-keeping, Tax returns</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>4. LANGUAGES</label>
+        <textarea id="cvLang" rows="2" oninput="updateCV()">Speak: Northern Sotho (good), English (good), Afrikaans (fair), Zulu (fair)
+Read/Write: Northern Sotho, English, Afrikaans, Zulu</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>5. CAREER HISTORY & WORK EXPERIENCE</label>
+        <textarea id="cvExp" rows="3" oninput="updateCV()">Part-time: Cashier and packer at Pick n Pay during weekends and school holidays (4 years)
+Salesperson at Pretoria Show for Philips (Sept 2006 & Sept 2007)
+Full-time: None</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>6-8. INTERESTS, RESPONSIBILITIES & AWARDS</label>
+        <textarea id="cvRes" rows="2" oninput="updateCV()">Activities: Debating Society, YMCA Secretary
+Prizes: School colours for soccer, Soweto Marathon Silver Medal</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>9. REFERENCES</label>
+        <textarea id="cvRef" rows="3" oninput="updateCV()">1. Mr PH Smith - Facilitator, Villieria YMCA (Tel: 012 346 2413)
+2. Dr SL Mahlangu - Principal, Mamelodi High School (Tel: 012 455 8590)</textarea>
+      </div>
       
       <button class="btn btn-green" onclick="window.print()" style="width:100%;margin-top:6px">📥 Download / Print CV (PDF)</button>
     </div>
@@ -187,6 +270,9 @@ nav::-webkit-scrollbar{display:none}
 
 <!-- POST JOB PAGE -->
 <div id="page-post" class="container hidden">
+  <div class="back-bar">
+    <button class="btn btn-outline" onclick="goBack()">← Back to Previous Page</button>
+  </div>
   <div class="section-title">Post a Verified Vacancy</div>
   <div style="background:#fff;padding:16px;border-radius:14px;border:1px solid var(--line);max-width:600px">
     <input id="postTitle" placeholder="Job Title" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-bottom:10px">
@@ -198,7 +284,33 @@ nav::-webkit-scrollbar{display:none}
   </div>
 </div>
 
-<!-- JOB MODAL -->
+<!-- POPIA & PRIVACY POLICY MODAL -->
+<div id="popiaModal" class="modal">
+  <div class="modal-inner">
+    <h2 style="font-size:22px;margin-bottom:8px;color:#111">POPIA Compliance & Privacy Policy</h2>
+    <div style="font-size:12.5px;color:#444;line-height:1.5;max-height:240px;overflow-y:auto;border:1px solid var(--line);padding:12px;border-radius:10px;margin-bottom:14px;background:#F6F7F5">
+      <b>Protection of Personal Information Act (POPIA) Notice:</b><br><br>
+      1. <b>Data Ownership:</b> All information entered into the CV Builder remains strictly under your control. We do not sell or transmit your personal data to third parties.<br>
+      2. <b>Purpose:</b> Personal details provided are used solely to format and generate your downloadable Curriculum Vitae.<br>
+      3. <b>Security:</b> Processing occurs locally within your browser context.<br>
+      4. <b>Consent:</b> By checking the box below, you explicitly consent to the local processing of your personal information for CV generation in compliance with South African POPIA regulations.
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px">
+      <input type="checkbox" id="popiaCheck" style="margin-top:2px;width:18px;height:18px">
+      <label for="popiaCheck" style="font-size:13px;font-weight:600;cursor:pointer;color:#111">
+        I have read and agree to the Privacy Policy and consent to POPIA personal data processing for CV generation.
+      </label>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-green" style="flex:1" onclick="acceptPopia()">Proceed to CV Builder</button>
+      <button class="btn btn-outline" onclick="closePopiaModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- JOB DETAIL MODAL -->
 <div id="modal" class="modal" onclick="if(event.target==this)closeModal()">
   <div class="modal-inner" id="modalBox"></div>
 </div>
@@ -208,28 +320,28 @@ nav::-webkit-scrollbar{display:none}
 <script>
 const towns = ["Bloemfontein","Welkom","Botshabelo","Thaba Nchu","Sasolburg","Kroonstad","Bethlehem","Phuthaditjhaba","Harrismith","Parys","Virginia","Odendaalsrus","Winburg","Senekal","Ficksburg","Ladybrand","QwaQwa","Zastron","Bothaville","Viljoenskroon","Heilbron"];
 
+let pageHistory = ['home'];
+let currentPage = 'home';
+let popiaAccepted = false;
+
 let jobs = [
   {id:1, title:"Professional Nurse - PHC", company:"Free State Dept of Health", town:"Bloemfontein", type:"Full-time", category:"Healthcare", salary:"R 320k - R 410k p.a.", date:"Today", isNew:true, desc:"Provide primary healthcare services at Bloemfontein clinics. SANC registration and 2+ years PHC experience required.", applyUrl:"https://www.dpsa.gov.za"},
   {id:2, title:"Logistics Coordinator", company:"N3 Corridor Logistics Hub", town:"Harrismith", type:"Full-time", category:"Driving & Logistics", salary:"R 12,000 p.m.", date:"Today", isNew:true, desc:"Freight documentation management along the N3 corridor. Grade 12 with computer literacy required.", applyUrl:"https://www.safmarine.com"},
   {id:3, title:"Municipal Security Officer", company:"Maluti-a-Phofung Municipality", town:"Harrismith", type:"Full-time", category:"Security", salary:"R 9,500 p.m.", date:"Today", isNew:true, desc:"Asset protection and site monitoring for municipal buildings. PSIRA Grade C required.", applyUrl:"https://www.map.gov.za"},
   {id:4, title:"Senior Mathematics Educator", company:"Department of Education FS", town:"Welkom", type:"Full-time", category:"Education", salary:"R 280k - R 350k p.a.", date:"1d ago", isNew:false, desc:"Grade 10-12 Mathematics instruction at Welkom Secondary. SACE registered.", applyUrl:"https://www.education.gov.za"},
   {id:5, title:"Plant Artisan - Boilermaker", company:"Harmony Gold", town:"Virginia", type:"Full-time", category:"Mining", salary:"R 22,000 p.m.", date:"1d ago", isNew:false, desc:"Underground and plant maintenance support in Virginia mining operations. Trade test required.", applyUrl:"https://www.harmony.co.za"},
-  {id:6, title:"Administration Clerk", company:"Mangaung Metropolitan Municipality", town:"Bloemfontein", type:"Full-time", category:"Government", salary:"R 14,200 p.m.", date:"2d ago", isNew:false, desc:"General administrative support and municipal billing inquiries handling in Bloemfontein.", applyUrl:"https://www.mangaung.co.za"},
-  {id:7, title:"Chemical Plant Operator", company:"Sasol", town:"Sasolburg", type:"Full-time", category:"Mining", salary:"R 18,500 p.m.", date:"2d ago", isNew:false, desc:"Industrial chemical processing support at Sasolburg facility. N6 or related technical qualification.", applyUrl:"https://www.sasol.com"},
-  {id:8, title:"Store Assistant - Retail", company:"Superspar", town:"Bethlehem", type:"Full-time", category:"Retail", salary:"R 6,000 p.m.", date:"3d ago", isNew:false, desc:"Customer service, stock merchandising, and cashier duties in Bethlehem.", applyUrl:"https://www.spar.co.za"}
+  {id:6, title:"Administration Clerk", company:"Mangaung Metropolitan Municipality", town:"Bloemfontein", type:"Full-time", category:"Government", salary:"R 14,200 p.m.", date:"2d ago", isNew:false, desc:"General administrative support and municipal billing inquiries handling in Bloemfontein.", applyUrl:"https://www.mangaung.co.za"}
 ];
 
 const crawlQueue = [
   {title:"Data Capturer", company:"SASSA", town:"Phuthaditjhaba", type:"Contract", category:"Government", salary:"R 8,800 p.m.", desc:"Social grant application processing and client verification.", applyUrl:"https://www.sassa.gov.za"},
-  {title:"General Worker", company:"Gold Fields", town:"Welkom", type:"Contract", category:"Mining", salary:"R 10,500 p.m.", desc:"Surface maintenance and support in Welkom operations.", applyUrl:"https://www.goldfields.com"},
-  {title:"IT Support Technician", company:"Central University of Technology", town:"Welkom", type:"Full-time", category:"Education", salary:"R 16,000 p.m.", desc:"Campus network and user hardware support.", applyUrl:"https://www.cut.ac.za"},
-  {title:"Receptionist", company:"Protea Hotel by Marriott", town:"Bethlehem", type:"Full-time", category:"Retail", salary:"R 7,200 p.m.", desc:"Front desk guest management and bookings.", applyUrl:"https://www.marriott.com"}
+  {title:"General Worker", company:"Gold Fields", town:"Welkom", type:"Contract", category:"Mining", salary:"R 10,500 p.m.", desc:"Surface maintenance and support in Welkom operations.", applyUrl:"https://www.goldfields.com"}
 ];
 
 let terminalLogs = [];
 
 function init(){
-  ['townFilterHero','filterTown','postTown'].forEach(id => {
+  ['filterTown','postTown'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.innerHTML = '<option value="">All Towns</option>' + towns.map(t=>`<option>${t}</option>`).join('');
   });
@@ -257,12 +369,52 @@ function init(){
 }
 
 function showPage(p){
+  if(p === 'cvbuilder' && !popiaAccepted){
+    document.getElementById('popiaModal').style.display = 'flex';
+    return;
+  }
+
+  if(currentPage !== p){
+    pageHistory.push(p);
+    currentPage = p;
+  }
+
   document.querySelectorAll('[id^="page-"]').forEach(el => el.classList.add('hidden'));
   document.getElementById('page-'+p).classList.remove('hidden');
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.page==p));
   if(p==='jobs' || p==='home') renderJobs();
+  window.scrollTo(0,0);
 }
+
+function goBack(){
+  if(pageHistory.length > 1){
+    pageHistory.pop();
+    const prev = pageHistory[pageHistory.length - 1];
+    currentPage = prev;
+    document.querySelectorAll('[id^="page-"]').forEach(el => el.classList.add('hidden'));
+    document.getElementById('page-'+prev).classList.remove('hidden');
+    document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.page==prev));
+  } else {
+    showPage('home');
+  }
+}
+
 function goJobs(){ showPage('jobs'); renderJobs(); }
+
+function acceptPopia(){
+  const chk = document.getElementById('popiaCheck');
+  if(!chk.checked){
+    alert("Please check the box to agree to POPIA regulations before proceeding.");
+    return;
+  }
+  popiaAccepted = true;
+  document.getElementById('popiaModal').style.display = 'none';
+  showPage('cvbuilder');
+}
+
+function closePopiaModal(){
+  document.getElementById('popiaModal').style.display = 'none';
+}
 
 function renderJobs(){
   const q = document.getElementById('searchInput').value.toLowerCase();
@@ -322,10 +474,16 @@ function openJob(id){
 
 function closeModal(){ document.getElementById('modal').style.display = 'none'; }
 
-// Full Guide-Based CV Template Live Preview Generator
+// Full Guide CV Template Generator
 function updateCV(){
   const name = document.getElementById('cvName').value;
-  const info = document.getElementById('cvInfo').value.replace(/\n/g, '<br>');
+  const street = document.getElementById('cvStreet').value;
+  const suburb = document.getElementById('cvSuburb').value;
+  const town = document.getElementById('cvTown').value;
+  const postCode = document.getElementById('cvPostCode').value;
+  const phone = document.getElementById('cvPhone').value;
+  const meta = document.getElementById('cvPersonalMeta').value;
+  
   const goals = document.getElementById('cvGoals').value;
   const edu = document.getElementById('cvEdu').value.replace(/\n/g, '<br>');
   const lang = document.getElementById('cvLang').value.replace(/\n/g, '<br>');
@@ -344,7 +502,15 @@ function updateCV(){
       <p style="font-size:11px;color:#333;margin-bottom:10px">${goals}</p>
 
       <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">2. Personal Information</div>
-      <p style="font-size:11px;color:#333;margin-bottom:10px">${info}</p>
+      <p style="font-size:11px;color:#333;margin-bottom:10px">
+        <b>Address:</b><br>
+        ${street}<br>
+        ${suburb}<br>
+        ${town}<br>
+        ${postCode}<br>
+        ${phone}<br>
+        ${meta}
+      </p>
       
       <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">3. Education, Qualifications and Skills</div>
       <p style="font-size:11px;color:#333;margin-bottom:10px">${edu}</p>
@@ -355,7 +521,7 @@ function updateCV(){
       <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">5. Career History</div>
       <p style="font-size:11px;color:#333;margin-bottom:10px">${exp}</p>
 
-      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">6-7. Personal Interests & Responsibilities</div>
+      <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">6-8. Personal Interests & Responsibilities</div>
       <p style="font-size:11px;color:#333;margin-bottom:10px">${res}</p>
 
       <div style="font-size:11.5px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:4px;text-transform:uppercase">9. References</div>
