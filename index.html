@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free State Jobs Daily | Professional Job Portal</title>
+<title>Free State Jobs Daily | Professional Job Portal & CV Builder</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,7 +26,7 @@ nav::-webkit-scrollbar{display:none}
 
 .search-bar{display:flex;gap:8px;background:#fff;padding:6px;border:1px solid var(--line);border-radius:16px;max-width:700px;box-shadow:0 4px 20px rgba(0,0,0,.03);flex-wrap:wrap}
 .search-bar input,.search-bar select{border:0;outline:0;padding:10px 12px;font-size:14px;flex:1;min-width:140px;background:transparent}
-.search-bar button{background:var(--green);color:#fff;border:0;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;width:100%;sm:width:auto}
+.search-bar button{background:var(--green);color:#fff;border:0;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;width:100%}
 
 .container{max-width:1280px;margin:0 auto;padding:16px}
 .section-title{font-size:24px;margin-bottom:14px;font-weight:600}
@@ -57,11 +57,18 @@ nav::-webkit-scrollbar{display:none}
 .cv-grid{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:768px){.cv-grid{grid-template-columns:1fr 1fr}}
 
+/* Dedicated CV Print / Download Styling */
+@media print {
+  body * { visibility: hidden; }
+  #cvPreview, #cvPreview * { visibility: visible; }
+  #cvPreview { position: absolute; left: 0; top: 0; width: 100%; border: 0; padding: 0; box-shadow: none; background: #fff; }
+  header, nav, .cv-editor-pane { display: none !important; }
+}
+
 .btn{padding:10px 16px;border-radius:10px;border:0;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-size:14px;text-align:center}
 .btn-green{background:#2E7D32;color:#fff}
 .btn-dark{background:#111F15;color:#fff}
 .hidden{display:none!important}
-
 .toast{position:fixed;bottom:16px;right:16px;background:#111;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;z-index:99;box-shadow:0 10px 25px rgba(0,0,0,.2);display:none}
 </style>
 </head>
@@ -77,8 +84,8 @@ nav::-webkit-scrollbar{display:none}
     <button class="nav-btn" data-page="jobs">All Jobs</button>
     <button class="nav-btn" data-page="towns">Towns</button>
     <button class="nav-btn" data-page="robot">Robot 🤖</button>
-    <button class="nav-btn" data-page="cvbuilder">CV 📄</button>
-    <button class="nav-btn" data-page="post">Post</button>
+    <button class="nav-btn" data-page="cvbuilder">CV Builder 📄</button>
+    <button class="nav-btn" data-page="post">Post Job</button>
   </nav>
 </header>
 
@@ -89,10 +96,7 @@ nav::-webkit-scrollbar{display:none}
     <p>Automated crawler indexing real municipal, government, mining, healthcare, and retail vacancies across all 21 Free State towns with working official online application portals.</p>
     <div class="search-bar">
       <input id="searchInput" placeholder="Search title, company, town...">
-      <select id="townFilterHero" style="display:none;sm:block">
-        <option value="">All Towns</option>
-      </select>
-      <button onclick="goJobs()">Search</button>
+      <button onclick="goJobs()">Search Jobs</button>
     </div>
   </div>
   
@@ -158,18 +162,24 @@ nav::-webkit-scrollbar{display:none}
 
 <!-- CV BUILDER PAGE -->
 <div id="page-cvbuilder" class="container hidden">
-  <div class="section-title">ATS-Optimized South African CV Builder</div>
-  <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Fill in your professional details to instantly format an employment-ready CV suited for government and corporate applications.</p>
+  <div class="section-title">Professional ATS-Friendly CV Builder</div>
+  <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Fill in your professional details below to generate an employment-ready CV. Click <b>Download / Print CV</b> to save only your formatted CV as a PDF.</p>
   
   <div class="cv-grid">
-    <div style="background:#fff;padding:16px;border-radius:14px;border:1px solid var(--line)">
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">Full Name</label><input id="cvName" value="Thabo Mokoena" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px"></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">Target Profession</label><input id="cvTitle" value="Administrative Clerk / Driver" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px"></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">Location & Contact</label><input id="cvContact" value="Bloemfontein, Free State | 082 123 4567 | thabo@email.co.za" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px"></div>
-      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">Professional Summary</label><textarea id="cvSummary" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Reliable professional with 4+ years of public service and administrative experience across Free State municipal structures.</textarea></div>
-      <button class="btn btn-green" onclick="window.print()" style="width:100%;margin-top:6px">Print / Export PDF</button>
+    <!-- Editor Pane -->
+    <div class="cv-editor-pane" style="background:#fff;padding:16px;border-radius:14px;border:1px solid var(--line)">
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">FULL NAME</label><input id="cvName" value="THABO MOKOENA" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px"></div>
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">CONTACT & LOCATION</label><input id="cvContact" value="Bloemfontein, South Africa | +27 82 123 4567 | thabo@email.com" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px"></div>
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">PROFESSIONAL SUMMARY</label><textarea id="cvSummary" rows="3" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Driven and results-oriented Administrative Clerk with 4+ years of experience delivering high-impact solutions in the public sector. Proven track record of optimizing project workflows and driving operational efficiency.</textarea></div>
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">CORE SKILLS</label><textarea id="cvSkills" rows="2" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">- Technical: Microsoft Office, Google Workspace, Data Capture\n- Competencies: Stakeholder Management, Report Writing</textarea></div>
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">PROFESSIONAL EXPERIENCE</label><textarea id="cvExp" rows="4" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Mangaung Support Services – Bloemfontein\nAdmin Assistant | Jan 2022 – Present\n- Managed filing and office correspondence.\n- Handled client queries efficiently resulting in 15% higher satisfaction.</textarea></div>
+      <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted)">EDUCATION</label><textarea id="cvEdu" rows="2" oninput="updateCV()" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);margin-top:4px">Grade 12 Senior Certificate | Bloemfontein High School (2019)</textarea></div>
+      
+      <button class="btn btn-green" onclick="window.print()" style="width:100%;margin-top:6px">📥 Download / Print CV (PDF)</button>
     </div>
-    <div style="background:#fff;padding:20px;border-radius:14px;border:1px solid var(--line);overflow-x:auto" id="cvPreview"></div>
+
+    <!-- Live Preview Pane -->
+    <div style="background:#fff;padding:24px;border-radius:14px;border:1px solid var(--line);overflow-x:auto;font-family:'Inter',sans-serif;color:#111" id="cvPreview"></div>
   </div>
 </div>
 
@@ -196,7 +206,6 @@ nav::-webkit-scrollbar{display:none}
 <script>
 const towns = ["Bloemfontein","Welkom","Botshabelo","Thaba Nchu","Sasolburg","Kroonstad","Bethlehem","Phuthaditjhaba","Harrismith","Parys","Virginia","Odendaalsrus","Winburg","Senekal","Ficksburg","Ladybrand","QwaQwa","Zastron","Bothaville","Viljoenskroon","Heilbron"];
 
-// Verified jobs with stable, working top-level application domain URLs (No 404s)
 let jobs = [
   {id:1, title:"Professional Nurse - PHC", company:"Free State Dept of Health", town:"Bloemfontein", type:"Full-time", category:"Healthcare", salary:"R 320k - R 410k p.a.", date:"Today", isNew:true, desc:"Provide primary healthcare services at Bloemfontein clinics. SANC registration and 2+ years PHC experience required.", applyUrl:"https://www.dpsa.gov.za"},
   {id:2, title:"Logistics Coordinator", company:"N3 Corridor Logistics Hub", town:"Harrismith", type:"Full-time", category:"Driving & Logistics", salary:"R 12,000 p.m.", date:"Today", isNew:true, desc:"Freight documentation management along the N3 corridor. Grade 12 with computer literacy required.", applyUrl:"https://www.safmarine.com"},
@@ -218,7 +227,7 @@ const crawlQueue = [
 let terminalLogs = [];
 
 function init(){
-  ['townFilterHero','filterTown','postTown','townSelectHero'].forEach(id => {
+  ['townFilterHero','filterTown','postTown'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.innerHTML = '<option value="">All Towns</option>' + towns.map(t=>`<option>${t}</option>`).join('');
   });
@@ -311,19 +320,34 @@ function openJob(id){
 
 function closeModal(){ document.getElementById('modal').style.display = 'none'; }
 
+// Professional ATS CV Template Live Preview Generator
 function updateCV(){
   const name = document.getElementById('cvName').value;
-  const title = document.getElementById('cvTitle').value;
   const contact = document.getElementById('cvContact').value;
   const summary = document.getElementById('cvSummary').value;
+  const skills = document.getElementById('cvSkills').value.replace(/\n/g, '<br>');
+  const exp = document.getElementById('cvExp').value.replace(/\n/g, '<br>');
+  const edu = document.getElementById('cvEdu').value.replace(/\n/g, '<br>');
 
   document.getElementById('cvPreview').innerHTML = `
-    <h2 style="font-size:28px;color:var(--green);margin-bottom:2px">${name}</h2>
-    <div style="font-weight:600;font-size:14px;margin-bottom:4px">${title}</div>
-    <div style="font-size:11.5px;color:var(--muted);margin-bottom:14px">${contact}</div>
-    <hr style="border:0;border-top:1px solid var(--line);margin-bottom:12px">
-    <h3 style="font-size:16px;margin-bottom:4px">Professional Summary</h3>
-    <p style="font-size:12.5px;color:#333;line-height:1.4">${summary}</p>
+    <div style="font-family:'Inter',sans-serif;color:#111;line-height:1.4">
+      <div style="text-align:center;margin-bottom:14px">
+        <h1 style="font-size:26px;font-weight:800;letter-spacing:1px;margin-bottom:2px;font-family:'Inter',sans-serif">${name}</h1>
+        <div style="font-size:11.5px;color:#555">${contact}</div>
+      </div>
+      
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">Professional Summary</div>
+      <p style="font-size:11.5px;color:#333;margin-bottom:12px">${summary}</p>
+      
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">Core Skills & Competencies</div>
+      <p style="font-size:11.5px;color:#333;margin-bottom:12px">${skills}</p>
+
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">Professional Experience</div>
+      <p style="font-size:11.5px;color:#333;margin-bottom:12px">${exp}</p>
+
+      <div style="font-size:12px;font-weight:700;border-bottom:2px solid #111;padding-bottom:2px;margin-bottom:6px;text-transform:uppercase">Education</div>
+      <p style="font-size:11.5px;color:#333;">${edu}</p>
+    </div>
   `;
 }
 
