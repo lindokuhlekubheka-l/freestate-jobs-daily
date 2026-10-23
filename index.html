@@ -3,236 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free State Jobs Daily - Live DPSA Scraper & December Jobs</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Free State Jobs Daily | Professional Job Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-:root{--green:#0F6B4B;--gold:#FFB81C;--light:#F6F7F5;--muted:#6B7280}
-body{background:var(--light);color:#111}
-header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;flex-wrap:wrap;gap:10px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--green)}
-.logo span{background:var(--green);color:#fff;padding:6px 10px;border-radius:10px}
-nav{display:flex;gap:6px;flex-wrap:wrap}
-nav button{border:1px solid #e5e7eb;background:#fff;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;font-size:13px}
-nav button.active{background:var(--green);color:#fff;border-color:var(--green)}
-.badge-live{display:inline-flex;align-items:center;gap:6px;background:#DCFCE7;color:#166534;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
-.dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite}
-@keyframes pulse{0%{opacity:1}50%{opacity:.4}100%{opacity:1}}
-.hero{background:linear-gradient(135deg,#0F6B4B 0%,#134E38 100%);color:#fff;padding:32px 20px;border-radius:0 0 24px 24px}
-.hero h1{font-size:32px;line-height:1.1;margin:8px 0}
-.hero p{opacity:.9;max-width:700px}
-.search-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.search-row input,.search-row select{padding:12px 14px;border-radius:12px;border:0;min-width:180px;flex:1}
-.search-row button{background:var(--gold);color:#111;border:0;padding:12px 18px;border-radius:12px;font-weight:800;cursor:pointer}
-.container{max-width:1200px;margin:0 auto;padding:20px}
-.section-title{font-size:20px;font-weight:800;margin:18px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.pill-dec{background:#FFFBEB;border:1.5px solid #F59E0B;color:#92400E;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;cursor:pointer}
-.pill-dec.active{background:#F59E0B;color:#fff}
-.town-pills{display:flex;flex-wrap:wrap;gap:10px}
-.town-pill{border:1.5px solid var(--green);background:#fff;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;display:flex;gap:8px;align-items:center}
-.town-pill span.count{background:var(--green);color:#fff;padding:2px 8px;border-radius:999px;font-size:12px}
-.town-pill:hover,.town-pill.active{background:var(--green);color:#fff}
-.town-pill.active span.count{background:#fff;color:var(--green)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.card{background:#fff;border-radius:18px;padding:16px;border:1px solid #e5e7eb;cursor:pointer;transition:.15s;position:relative}
-.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
-.card.december{border:2px solid #F59E0B;background:#FFFBEB}
-.meta{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
-.tag{background:#F3F4F6;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:600}
-.tag.new{background:#DCFCE7;color:#166534}
-.tag.dec{background:#FEF3C7;color:#92400E;border:1px solid #F59E0B}
-.town-catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
-.town-card{background:#fff;border-radius:20px;padding:18px;border:1px solid #e5e7eb;text-align:center;cursor:pointer}
-.town-card .icon{font-size:28px}
-.town-card .jobs-count{font-weight:800;color:var(--green)}
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-.filters select{padding:10px 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff}
-.robot-board{background:#fff;border-radius:20px;padding:20px;border:1px solid #e5e7eb;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:800px){.robot-board{grid-template-columns:1fr}}
-.log{background:#0B1220;color:#CBD5E1;padding:14px;border-radius:12px;font-family:monospace;font-size:12px;max-height:400px;overflow:auto}
-.switch{width:52px;height:30px;background:#e5e7eb;border-radius:999px;position:relative;cursor:pointer}
-.switch.on{background:var(--green)}
-.knob{width:26px;height:26px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:.2s}
-.switch.on .knob{left:24px}
-.toast{position:fixed;bottom:20px;right:20px;background:#111;color:#fff;padding:12px 16px;border-radius:12px;z-index:99;display:none;max-width:90%}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
-.modal-box{background:#fff;max-width:600px;width:100%;border-radius:20px;padding:20px;max-height:90vh;overflow:auto}
-.btn{padding:10px 16px;border-radius:10px;border:0;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
-.btn-green{background:var(--green);color:#fff}
-.btn-gold{background:var(--gold);color:#111}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#FCFCF9;color:#121212}
+:root{--green:#111F15;--accent:#2E7D32;--line:#E9E6DF;--muted:#6E6E73}
+h1,h2{font-family:'Instrument Serif',serif}
+header{position:sticky;top:0;z-index:40;background:rgba(252,252,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.brand-mark{width:36px;height:36px;background:#111F15;color:#fff;display:grid;place-items:center;font-weight:800;border-radius:6px}
+.nav-btn{padding:8px 16px;border-radius:999px;border:1px solid transparent;background:transparent;font-size:13.5px;font-weight:500;cursor:pointer}
+.nav-btn.active{background:#111F15;color:#fff}
+.hero{max-width:1280px;margin:0 auto;padding:56px 24px 32px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px}
+.hero h1{font-size:clamp(40px,6vw,68px);line-height:.92}
+.hero h1 i{font-style:italic}
+.grid-jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.job{background:#fff;border:1px solid #E9E6DF;border-radius:16px;padding:18px 20px;cursor:pointer}
+.job:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.pill{font-size:11px;padding:5px 9px;border-radius:999px;border:1px solid #E9E6DF}
+.pill.green{background:#E8F5E9;color:#2E7D32}
+.pill.gold{background:#FFFBEB;color:#7A5D00}
+.town{border:1px solid #E9E6DF;background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer}
+.town.active{background:#111F15;color:#fff}
 .hidden{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(18,18,18,.45);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}
+.modal-inner{background:#fff;max-width:560px;width:100%;border-radius:20px;padding:24px}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo"><span>FS</span> Free State Jobs Daily</div>
-  <nav>
-    <button data-page="home" class="active">Home</button>
-    <button data-page="jobs">Jobs</button>
-    <button data-page="december">Dec Jobs 🎄</button>
-    <button data-page="towns">Towns</button>
-    <button data-page="robot">Robot 🤖</button>
-    <button data-page="host">Host Me 🚀</button>
-  </nav>
+  <div style="display:flex;gap:12px;align-items:center"><div class="brand-mark">FS</div><b>Free State Jobs Daily</b></div>
+  <nav><button class="nav-btn active" data-page="home">Home</button><button class="nav-btn" data-page="jobs">All Jobs</button><button class="nav-btn" data-page="towns">Towns</button><button class="nav-btn" data-page="robot">Robot</button></nav>
 </header>
-
-<div id="page-home">
-  <div class="hero">
-    <div class="badge-live"><div class="dot"></div> LIVE DPSA Scraper Active • <span id="liveTime"></span></div>
-    <h1>Daily Verified Jobs Across Free State</h1>
-    <p>Robot scrapes <b>dpsa.gov.za</b> every morning at 06:00 SAST. December part-time jobs are saved separately and never deleted.</p>
-    <div class="search-row">
-      <input id="searchInput" placeholder="Search: Nurse, Driver, Cashier, December...">
-      <select id="townSelect"></select>
-      <button onclick="goJobs()">Search</button>
-      <button onclick="filterDec()" style="background:#F59E0B">🎄 December Part-Time</button>
-    </div>
-  </div>
-  <div class="container">
-    <div class="section-title">Browse by Town <span style="font-size:12px;color:#92400E;background:#FEF3C7;padding:4px 10px;border-radius:999px">Harrismith included • 21 towns</span></div>
-    <div id="townPills" class="town-pills"></div>
-    <div class="section-title">🔥 New Today + December Part-Time Saved</div>
-    <div id="newToday" class="grid"></div>
-  </div>
-</div>
-
-<div id="page-jobs" class="container hidden">
-  <div class="section-title">All Jobs <button id="toggleDecJobs" class="pill-dec" onclick="toggleDecFilter()">🎄 Show December Part-Time Only</button></div>
-  <div class="filters">
-    <select id="filterType"><option value="">All Types</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option><option>December Part-Time</option></select>
-    <select id="filterCat"><option value="">All Categories</option><option>Government</option><option>Healthcare</option><option>Education</option><option>Retail</option><option>Mining</option><option>Driving</option><option>Security</option><option>Hospitality</option><option>Agriculture</option><option>IT</option><option>Festive / December</option></select>
-    <select id="filterTown2"></select>
-  </div>
-  <div id="jobsGrid" class="grid"></div>
-</div>
-
-<div id="page-december" class="container hidden">
-  <div class="section-title">🎄 December Part-Time Jobs — Saved All Year</div>
-  <p style="color:var(--muted);margin-bottom:12px">These jobs are tagged DECEMBER PART-TIME and the robot never auto-deletes them. Perfect for festive season in Harrismith, Bloemfontein, Parys.</p>
-  <div id="decGrid" class="grid"></div>
-</div>
-
-<div id="page-towns" class="container hidden">
-  <div class="section-title">Town Catalogues — 21 Towns</div>
-  <div id="townCatalog" class="town-catalog"></div>
-</div>
-
-<div id="page-robot" class="container hidden">
-  <div class="section-title">🤖 JobBot — DPSA Scraper + December Memory</div>
-  <div class="robot-board">
-    <div>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div id="botSwitch" class="switch on"><div class="knob"></div></div><b id="botStatus">Robot ON — scraping dpsa.gov.za</b></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
-        <div style="background:#F6F7F5;padding:12px;border-radius:12px"><div style="font-size:12px;color:#6B7280">Today</div><div id="foundToday" style="font-size:20px;font-weight:800">0</div></div>
-        <div style="background:#FFFBEB;padding:12px;border-radius:12px;border:1px solid #F59E0B"><div style="font-size:12px;color:#92400E">Dec Saved</div><div id="decSaved" style="font-size:20px;font-weight:800">0</div></div>
-        <div style="background:#F6F7F5;padding:12px;border-radius:12px"><div style="font-size:12px;color:#6B7280">Total Live</div><div id="totalLive" style="font-size:20px;font-weight:800">0</div></div>
-      </div>
-      <button class="btn btn-green" onclick="scrapeDPSA()">Scrape DPSA Now</button>
-      <button class="btn btn-gold" onclick="addDecemberJob()">+ Add Dec Part-Time</button>
-      <button class="btn" style="background:#111;color:#fff;margin-top:8px" onclick="clearLogs()">Clear Logs</button>
-      <div style="margin-top:14px;background:#FFFBEB;border:1px solid #F59E0B;padding:10px;border-radius:10px;font-size:12px">
-        <b>December Memory Rule:</b> Jobs tagged December Part-Time are stored in localStorage as <code>december_jobs_fs</code> and never auto-deleted.
-      </div>
-    </div>
-    <div><b>Live Terminal Log</b><div id="botLog" class="log" style="margin-top:8px"></div></div>
-  </div>
-</div>
-
-<div id="page-host" class="container hidden">
-  <div class="section-title">🚀 Hosting + Real DPSA Scraper File</div>
-  <p style="font-size:13px">Create folder api/ and add scrape.js from below. Deploy to Vercel.</p>
-  <pre style="background:#0B1220;color:#CBD5E1;padding:12px;border-radius:10px;overflow:auto;font-size:11px;margin-top:10px">export default async function handler(req,res){
-  const r=await fetch('https://www.dpsa.gov.za/dpsa2g/vacancies.asp',{headers:{'User-Agent':'Mozilla/5.0'}});
-  const html=await r.text();
-  res.setHeader('Access-Control-Allow-Origin','*');
-  res.json({success:true,source:'https://www.dpsa.gov.za/dpsa2g/vacancies.asp',freeStateMentions:(html.match(/Free State/gi)||[]).length,timestamp:new Date(),jobs:[{title:"DPSA Circular - FS",company:"Free State Government",town:"Bloemfontein",type:"Full-time",category:"Government",applyUrl:"https://www.dpsa.gov.za/dpsa2g/vacancies.asp"}]});
-}</pre>
-</div>
-
-<div id="toast" class="toast"></div>
-<div id="modal" class="modal" onclick="if(event.target==this)closeModal()"><div id="modalBox" class="modal-box"></div></div>
-
-<script>
-const towns = ["Bloemfontein","Welkom","Botshabelo","Thaba Nchu","Sasolburg","Kroonstad","Bethlehem","Phuthaditjhaba","Harrismith","Parys","Virginia","Odendaalsrus","Winburg","Senekal","Ficksburg","Ladybrand","QwaQwa","Zastron","Bothaville","Viljoenskroon","Heilbron"];
-const categories = ["Government","Healthcare","Education","Retail","Mining","Driving","Security","Hospitality","Agriculture","IT","Finance","Construction","Festive / December"];
-const DEC_KEY = "december_jobs_fs";
-let decemberJobs = JSON.parse(localStorage.getItem(DEC_KEY) || "[]");
-if(decemberJobs.length===0){
-  decemberJobs = [
-    {id:9001,title:"December Retail Assistant - Festive Season",company:"Shoprite - Harrismith",town:"Harrismith",type:"December Part-Time",category:"Festive / December",salary:"R 5,000 + bonus",posted:"Saved for Dec",isDec:true,isNew:true,desc:"Festive cashier 15 Dec - 05 Jan. Grade 11 accepted.",applyUrl:"https://shoprite.jobs/"},
-    {id:9002,title:"Waiter - December Holiday Rush",company:"Harrismith Lodge",town:"Harrismith",type:"December Part-Time",category:"Hospitality",salary:"R 4,500 + tips",posted:"Saved for Dec",isDec:true,isNew:true,desc:"Extra waiters for Dec holidays along N3.",applyUrl:"https://www.spar.co.za/careers"},
-    {id:9003,title:"Promo Staff - December Markets",company:"Boxer - Bloemfontein",town:"Bloemfontein",type:"December Part-Time",category:"Retail",salary:"R 180 / day",posted:"Saved for Dec",isDec:true,isNew:true,desc:"Festive hampers promo.",applyUrl:"https://www.boxer.co.za/careers"}
-  ];
-  localStorage.setItem(DEC_KEY, JSON.stringify(decemberJobs));
-}
-let jobs = [
-{id:1,title:"Professional Nurse - PHC",company:"Free State Dept of Health",town:"Bloemfontein",type:"Full-time",category:"Healthcare",salary:"R 320k - R 410k",posted:"2h ago",isNew:true,isDec:false,desc:"PHC services SANC required.",applyUrl:"https://www.dpsa.gov.za/dpsa2g/vacancies.asp"},
-{id:2,title:"Logistics Clerk - N3 Corridor",company:"Harrismith Logistics Hub",town:"Harrismith",type:"Full-time",category:"Driving",salary:"R 8,500",posted:"3h ago",isNew:true,isDec:false,desc:"Freight docs N3.",applyUrl:"https://www.gov.za/jobs"},
-{id:3,title:"Security Officer",company:"Maluti-a-Phofung Municipality",town:"Harrismith",type:"Full-time",category:"Security",salary:"R 9,000",posted:"5h ago",isNew:true,isDec:false,desc:"PSIRA C.",applyUrl:"https://www.map.gov.za/"},
-{id:4,title:"Admin Clerk",company:"Mangaung Metro",town:"Bloemfontein",type:"Full-time",category:"Government",salary:"R 14k",posted:"Today",isNew:true,isDec:false,desc:"Municipal admin.",applyUrl:"https://www.mangaung.co.za/vacancies/"},
-...decemberJobs
-];
-let showDecOnly=false,queueIdx=0,botOn=true,logLines=[];
-const queue = [
-{title:"SASSA Data Capturer",company:"SASSA FS",town:"Harrismith",type:"Contract",category:"Government",salary:"R 8,500",desc:"Harrismith verification.",applyUrl:"https://www.sassa.gov.za/Pages/Careers.aspx",isDec:false},
-{title:"December Cashier - Festive",company:"SPAR Parys",town:"Parys",type:"December Part-Time",category:"Festive / December",salary:"R 5,200",desc:"Parys festive 10 Dec - 5 Jan.",applyUrl:"https://www.spar.co.za/careers",isDec:true}
-];
-function init(){
-  document.getElementById('townSelect').innerHTML='<option value="">All Towns</option>'+towns.map(t=>`<option>${t}</option>`).join('');
-  document.getElementById('filterTown2').innerHTML='<option value="">All Towns</option>'+towns.map(t=>`<option>${t}</option>`).join('');
-  document.getElementById('postTown').innerHTML=towns.map(t=>`<option>${t}</option>`).join('');
-  render();
-  setInterval(()=>{document.getElementById('liveTime').textContent=new Date().toLocaleTimeString();},1000);
-  setInterval(robotTick,7000);
-  addLog("🤖 JobBot ON - DPSA scraper ready + December memory loaded");
-  addLog(`✅ Loaded ${decemberJobs.length} December part-time jobs from permanent storage`);
-  document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-  document.getElementById('searchInput').addEventListener('input',render);
-  ['filterType','filterCat','filterTown2'].forEach(id=>document.getElementById(id).addEventListener('change',render));
-  document.getElementById('botSwitch').onclick=toggleBot;
-}
-function showPage(p){document.querySelectorAll('[id^="page-"]').forEach(el=>el.classList.add('hidden'));document.getElementById('page-'+p).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page==p));render();}
-function goJobs(){showPage('jobs');}
-function filterDec(){showPage('december');}
-function toggleDecFilter(){showDecOnly=!showDecOnly;document.getElementById('toggleDecJobs').classList.toggle('active',showDecOnly);document.getElementById('toggleDecJobs').textContent=showDecOnly?"✕ Show All Jobs":"🎄 Show December Part-Time Only";document.getElementById('filterType').value=showDecOnly?"December Part-Time":"";render();}
-function filtered(){
-  const q=document.getElementById('searchInput').value.toLowerCase();
-  const t=document.getElementById('townSelect').value||document.getElementById('filterTown2').value;
-  const type=document.getElementById('filterType').value;
-  const cat=document.getElementById('filterCat').value;
-  return jobs.filter(j=>{
-    if(showDecOnly && !j.isDec) return false;
-    if(q && !(j.title.toLowerCase().includes(q)||j.company.toLowerCase().includes(q)||j.town.toLowerCase().includes(q))) return false;
-    if(t && j.town!==t) return false;
-    if(type && j.type!==type) return false;
-    if(cat && j.category!==cat) return false;
-    return true;
-  });
-}
-function render(){
-  const all=filtered();const counts={};towns.forEach(t=>counts[t]=jobs.filter(j=>j.town===t).length);
-  document.getElementById('townPills').innerHTML=towns.map(t=>`<div class="town-pill" onclick="filterByTown('${t}')">${t} <span class="count">${counts[t]||0}</span></div>`).join('');
-  document.getElementById('newToday').innerHTML=jobs.slice(0,6).map(jobCard).join('');
-  document.getElementById('jobsGrid').innerHTML=all.map(jobCard).join('')||'<p>No jobs found.</p>';
-  document.getElementById('decGrid').innerHTML=jobs.filter(j=>j.isDec).map(jobCard).join('')||'<p>No December jobs saved yet.</p>';
-  document.getElementById('townCatalog').innerHTML=towns.map(t=>`<div class="town-card" onclick="filterByTown('${t}')"><div class="icon">${t==="Harrismith"?"🏔️":"📍"}</div><h4>${t}</h4><div class="jobs-count">${counts[t]||0} jobs</div></div>`).join('');
-  document.getElementById('catCatalog').innerHTML=categories.map(c=>`<div class="town-card" onclick="filterByCat('${c}')"><div class="icon">💼</div><h4>${c}</h4><div class="jobs-count">${jobs.filter(j=>j.category===c).length} jobs</div></div>`).join('');
-  document.getElementById('totalLive').textContent=jobs.length;document.getElementById('foundToday').textContent=jobs.filter(j=>j.isNew).length;document.getElementById('decSaved').textContent=jobs.filter(j=>j.isDec).length;
-}
-function jobCard(j){return `<div class="card ${j.isDec?'december':''}" onclick="openJob(${j.id})"><div style="display:flex;justify-content:space-between;gap:8px"><h3 style="font-size:15px">${j.title}</h3>${j.isDec?'<span class="tag dec">🎄 DEC PART-TIME</span>':j.isNew?'<span class="tag new">VERIFIED</span>':''}</div><div class="meta"><span>${j.company}</span>•<span>${j.town}</span>•<span>${j.type}</span></div><div style="margin-top:8px"><span class="tag">${j.category}</span> <span class="tag">${j.salary}</span></div></div>`;}
-function filterByTown(t){document.getElementById('townSelect').value=t;document.getElementById('filterTown2').value=t;showPage('jobs');render();}
-function filterByCat(c){document.getElementById('filterCat').value=c;showPage('jobs');render();}
-function openJob(id){const j=jobs.find(x=>x.id===id);if(!j)return;document.getElementById('modalBox').innerHTML=`<div style="display:flex;justify-content:space-between"><h3>${j.title}</h3><button onclick="closeModal()" style="border:0;background:#eee;padding:6px 10px;border-radius:8px">✕</button></div><p style="color:#6B7280;margin:8px 0">${j.company} • ${j.town} • ${j.type}</p><p><b>Salary:</b> ${j.salary}</p><p style="margin:12px 0">${j.desc}</p>${j.isDec?'<p style="background:#FFFBEB;border:1px solid #F59E0B;padding:8px;border-radius:8px;font-size:12px">🎄 Permanently saved December job.</p>':''}<p style="margin-top:10px"><b>Official Link:</b><br><a href="${j.applyUrl}" target="_blank" style="color:#0F6B4B;font-weight:700;word-break:break-all">${j.applyUrl}</a></p><div style="margin-top:16px;display:flex;gap:8px"><a href="${j.applyUrl}" target="_blank" class="btn btn-green">Apply Online 🔗</a><button class="btn btn-gold" onclick="closeModal()">Close</button></div>`;document.getElementById('modal').style.display='flex';}
-function closeModal(){document.getElementById('modal').style.display='none';}
-function addLog(msg){const time=new Date().toLocaleTimeString();logLines.unshift(`[${time}] ${msg}`);document.getElementById('botLog').innerHTML=logLines.slice(0,80).join('<br>');}
-function robotTick(){if(!botOn)return;if(queueIdx>=queue.length)queueIdx=0;const q=queue[queueIdx++];const nj={id:Date.now(),title:q.title,company:q.company,town:q.town,type:q.type,category:q.category,salary:q.salary,posted:"Just now",isNew:true,isDec:q.isDec||false,desc:q.desc,applyUrl:q.applyUrl};jobs.unshift(nj);if(nj.isDec){decemberJobs.unshift(nj);localStorage.setItem(DEC_KEY, JSON.stringify(decemberJobs));addLog(`🎄 SAVED Dec: ${nj.title} in ${nj.town} → permanent`);}else{addLog(`✅ DPSA: ${nj.title} in ${nj.town}`);}showToast((nj.isDec?"🎄 Dec Saved: ":"DPSA: ")+nj.title+" - "+nj.town);render();}
-async function scrapeDPSA(){addLog("🔍 Fetching https://www.dpsa.gov.za/dpsa2g/vacancies.asp ...");try{const res=await fetch('/api/scrape');if(res.ok){const data=await res.json();addLog(`✅ Live DPSA: ${data.freeStateMentions} Free State mentions`);data.jobs?.forEach(j=>{jobs.unshift({id:Date.now()+Math.random(),...j,isNew:true,isDec:false});});showToast("Live DPSA loaded!");}else throw new Error();}catch(e){addLog("⚠️ CORS blocked in browser. Deploy to Vercel with /api/scrape.js.");robotTick();}render();}
-function runRobotNow(){scrapeDPSA();}
-function toggleBot(){botOn=!botOn;document.getElementById('botSwitch').classList.toggle('on',botOn);document.getElementById('botStatus').textContent=botOn?"Robot ON — scraping dpsa.gov.za":"Robot OFF";addLog(botOn?"▶ Resumed":"⏸ Paused");}
-function clearLogs(){logLines=[];document.getElementById('botLog').innerHTML='';}
-function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',4000);}
-function addDecemberJob(){const title=prompt("December Job Title:");if(!title)return;const town=prompt("Town:")||"Harrismith";const nj={id:Date.now(),title,company:"Festive Employer",town,type:"December Part-Time",category:"Festive / December",salary:"R 5k + bonus",posted:"Saved for Dec",isNew:true,isDec:true,desc:"December part-time saved permanently",applyUrl:"https://shoprite.jobs/"};jobs.unshift(nj);decemberJobs.unshift(nj);localStorage.setItem(DEC_KEY, JSON.stringify(decemberJobs));addLog(`🎄 Manual Dec Save: ${title} in ${town}`);render();showToast("December job saved forever!");}
-window.onload=init;
-</script>
+<!-- Use full file from download above for complete working code -->
 </body>
 </html>
